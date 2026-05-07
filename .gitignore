@@ -1,0 +1,22 @@
+# Ambiente Python
+.venv/
+venv/
+env/
+
+# Dados e saídas grandes (não versionar)
+data/
+figuras_grid/
+
+# Resultados do notebook (médias MSE, grades, etc.)
+*.csv
+
+# macOS / editor
+.DS_Store
+
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Jupyter
+.ipynb_checkpoints/
