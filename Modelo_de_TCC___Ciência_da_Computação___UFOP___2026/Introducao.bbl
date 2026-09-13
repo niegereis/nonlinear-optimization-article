@@ -1,0 +1,109 @@
+\providecommand{\abntreprintinfo}[1]{%
+ \citeonline{#1}}
+\setlength{\labelsep}{0pt}\begin{thebibliography}{}
+\providecommand{\abntrefinfo}[3]{}
+\providecommand{\abntbstabout}[1]{}
+\abntbstabout{v<VERSION> }
+
+\bibitem[Abadi et al. 2016]{Abadi2016}
+\abntrefinfo{Abadi et al.}{Abadi et al.}{2016}
+{ABADI, M.; CHU, A.; GOODFELLOW, I.; MCMAHAN, H.~B.; MIRONOV, I.; TALWAR, K.;
+  ZHANG, L. Deep learning with differential privacy. In:  \emph{Proceedings of
+  the ACM Conference on Computer and Communications Security}. Vienna: [s.n.],
+  2016. p. 308--318.}
+
+\bibitem[Alistarh et al. 2017]{Alistarh2017}
+\abntrefinfo{Alistarh et al.}{Alistarh et al.}{2017}
+{ALISTARH, D.; GRUBIC, D.; LI, J.; TOMIOKA, R.; VOJNOVIC, M. {QSGD}:
+  Communication-efficient {SGD} via gradient quantization and encoding. In:
+  \emph{Proceedings of the Conference on Neural Information Processing
+  Systems}. Long Beach: [s.n.], 2017. p. 1709--1720.}
+
+\bibitem[BRASIL 2018]{Brasil2018}
+\abntrefinfo{BRASIL}{BRASIL}{2018}
+{BRASIL. \emph{Lei n\textsuperscript{o} 13.709, de 14 de agosto de 2018: Lei
+  Geral de Proteção de Dados Pessoais ({LGPD})}. 2018. Diário Oficial da
+  União, Brasília, DF, 15 ago. 2018.}
+
+\bibitem[Geiping et al. 2020]{Geiping2020}
+\abntrefinfo{Geiping et al.}{Geiping et al.}{2020}
+{GEIPING, J.; BAUERMEISTER, H.; DR{\"O}GE, H.; MOELLER, M. Inverting gradients
+  -- how easy is it to break privacy in federated learning? In:
+  \emph{Proceedings of the Conference on Neural Information Processing
+  Systems}. Virtual Event: [s.n.], 2020. p. 16937--16947.}
+
+\bibitem[Goodfellow, Bengio e Courville 2016]{Goodfellow2016}
+\abntrefinfo{Goodfellow, Bengio e Courville}{Goodfellow; Bengio;
+  Courville}{2016}
+{GOODFELLOW, I.; BENGIO, Y.; COURVILLE, A. \emph{Deep Learning}. Cambridge: MIT
+  Press, 2016.}
+
+\bibitem[Huang et al. 2021]{Huang2021}
+\abntrefinfo{Huang et al.}{Huang et al.}{2021}
+{HUANG, Y.; GUPTA, S.; SONG, Z.; LI, K.; ARORA, S. Evaluating gradient
+  inversion attacks and defenses in federated learning. In:  \emph{Proceedings
+  of the Conference on Neural Information Processing Systems}. Virtual Event:
+  [s.n.], 2021. p. 7232--7241.}
+
+\bibitem[Kairouz et al. 2021]{Kairouz2021}
+\abntrefinfo{Kairouz et al.}{Kairouz et al.}{2021}
+{KAIROUZ, P.; MCMAHAN, H.~B.; AVENT, B.; BELLET, A.; BENNIS, M.; BHAGOJI,
+  A.~N.; BONAWITZ, K.; CHARLES, Z.; CORMODE, G.; CUMMINGS, R. et al. Advances
+  and open problems in federated learning.
+\emph{Foundations and Trends in Machine Learning}, v.~14, n.~1--2, p. 1--210,
+  2021.}
+
+\bibitem[Lin et al. 2018]{Lin2018}
+\abntrefinfo{Lin et al.}{Lin et al.}{2018}
+{LIN, Y.; HAN, S.; MAO, H.; WANG, Y.; DALLY, W.~J. Deep gradient compression:
+  Reducing the communication bandwidth for distributed training. In:
+  \emph{Proceedings of the International Conference on Learning
+  Representations}. Vancouver: [s.n.], 2018.}
+
+\bibitem[McMahan et al. 2017]{McMahan2017}
+\abntrefinfo{McMahan et al.}{McMahan et al.}{2017}
+{MCMAHAN, H.~B.; MOORE, E.; RAMAGE, D.; HAMPSON, S.; {AG{\"U}ERA Y ARCAS}, B.
+  Communication-efficient learning of deep networks from decentralized data.
+  In:  \emph{Proceedings of the International Conference on Artificial
+  Intelligence and Statistics}. Fort Lauderdale: [s.n.], 2017. p. 1273--1282.}
+
+\bibitem[Stich, Cordonnier e Jaggi 2018]{Stich2018}
+\abntrefinfo{Stich, Cordonnier e Jaggi}{Stich; Cordonnier; Jaggi}{2018}
+{STICH, S.~U.; CORDONNIER, J.-B.; JAGGI, M. Sparsified {SGD} with memory. In:
+  \emph{Proceedings of the Conference on Neural Information Processing
+  Systems}. Montreal: [s.n.], 2018. p. 4447--4458.}
+
+\bibitem[Wangni et al. 2018]{Wangni2018}
+\abntrefinfo{Wangni et al.}{Wangni et al.}{2018}
+{WANGNI, J.; WANG, J.; LIU, J.; ZHANG, T. Gradient sparsification for
+  communication-efficient distributed optimization. In:  \emph{Proceedings of
+  the Conference on Neural Information Processing Systems}. Montreal: [s.n.],
+  2018. p. 1299--1309.}
+
+\bibitem[Wei et al. 2020]{Wei2020}
+\abntrefinfo{Wei et al.}{Wei et al.}{2020}
+{WEI, W.; LIU, L.; LOPER, M.; CHOW, K.-H.; GURSOY, M.~E.; TRUEX, S.; WU, Y. A
+  framework for evaluating client privacy leakages in federated learning. In:
+  \emph{Proceedings of the European Symposium on Research in Computer
+  Security}. Cham: Springer, 2020.  (Lecture Notes in Computer Science, v.
+  12308), p. 545--566.}
+
+\bibitem[Yin et al. 2021]{Yin2021}
+\abntrefinfo{Yin et al.}{Yin et al.}{2021}
+{YIN, H.; MALLYA, A.; VAHDAT, A.; ALVAREZ, J.~M.; KAUTZ, J.; MOLCHANOV, P. See
+  through gradients: Image batch recovery via {GradInversion}. In:
+  \emph{Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern
+  Recognition}. Virtual Event: [s.n.], 2021. p. 16337--16346.}
+
+\bibitem[Zhao, Mopuri e Bilen 2020]{Zhao2020}
+\abntrefinfo{Zhao, Mopuri e Bilen}{Zhao; Mopuri; Bilen}{2020}
+{ZHAO, B.; MOPURI, K.~R.; BILEN, H. \emph{{iDLG}: Improved Deep Leakage from
+  Gradients}. 2020. ArXiv:2001.02610.}
+
+\bibitem[Zhu, Liu e Han 2019]{Zhu2019}
+\abntrefinfo{Zhu, Liu e Han}{Zhu; Liu; Han}{2019}
+{ZHU, L.; LIU, Z.; HAN, S. Deep leakage from gradients. In:  \emph{Proceedings
+  of the Conference on Neural Information Processing Systems}. Vancouver:
+  [s.n.], 2019. p. 14774--14784.}
+
+\end{thebibliography}

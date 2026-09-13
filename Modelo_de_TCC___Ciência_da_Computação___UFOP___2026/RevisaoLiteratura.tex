@@ -1,0 +1,57 @@
+%================================================================%
+%======  Atividade 2 - Revisão de Literatura (Monografia I) =====%
+% Documento de entrega contendo apenas o capítulo de Revisão     %
+% Bibliográfica. O mesmo capítulo é incluído em Monografia.tex.  %
+%================================================================%
+\documentclass[12pt, oneside, a4paper, english, brazil, sumario=tradicional]{abntex2}
+
+\input{structure}
+
+% -- Informações para Capa e Folha de Rosto: ---------------
+\titulo{Compromisso entre Privacidade e Utilidade em Defesas contra Ataques de Inversão de Gradientes}
+\subtitulo{Revisão de Literatura}
+\autor{Niege Marryany dos Reis da Silva} \autorcite{Silva, Niege Marryany dos Reis da}
+\local{Ouro Preto} \uf{MG}
+\data{2026} \ano{2026}
+\orientador{Prof. Dr. Rodrigo Cesar Pedrosa Silva}
+\ttorientador{Universidade Federal de Ouro Preto}
+\coorientador[]{}
+\instituicao{Universidade Federal de Ouro Preto} \sigla{UFOP}
+\instituto{Instituto de Ciências Exatas e Biológicas}
+\departamento{Departamento de Computação}
+\curso{Ciência da Computação}
+\tipotrabalho{Revisão de literatura da Monografia I}
+\grau{Bacharel em Ciência da Computação}
+
+\begin{document}
+\frenchspacing
+
+\pagenumbering{roman}
+\imprimircapa
+\imprimirfolhaderosto
+
+\pdfbookmark[0]{\listfigurename}{lof}
+\listoffigures*
+\cleardoublepage
+\pdfbookmark[0]{\listtablename}{lot}
+\listoftables*
+\cleardoublepage
+\pdfbookmark[0]{\listalgorithmcfname}{loa}
+\listofalgorithmes
+\cleardoublepage
+\input{PreTextuais/ListaSiglas}
+\cleardoublepage
+
+\pdfbookmark[0]{\contentsname}{toc}
+\tableofcontents*
+\cleardoublepage
+
+\pagenumbering{arabic} \setcounter{page}{1}
+\textual
+\setcounter{chapter}{1} % mantém a numeração do capítulo como na monografia (Capítulo 2)
+\input{Capitulos/Cap2-RevisaoBibliografica}
+
+\postextual
+\bibliography{bibliografia}
+
+\end{document}

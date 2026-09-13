@@ -1,0 +1,13 @@
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {algocf}{\numberline {2.1}{\ignorespaces Federated Averaging (FedAvg)}}{14}{algocf.2.1}%
+\contentsline {algocf}{\numberline {2.2}{\ignorespaces Deep Leakage from Gradients (DLG)}}{16}{algocf.2.2}%
+\contentsline {algocf}{\numberline {2.3}{\ignorespaces DP-SGD}}{20}{algocf.2.3}%
+\addvspace {10\p@ }
+\contentsline {algocf}{\numberline {3.1}{\ignorespaces Treinamento de uma época com defesa aplicada ao gradiente}}{36}{algocf.3.1}%
+\contentsline {algocf}{\numberline {3.2}{\ignorespaces Protocolo de ataque aplicado a cada imagem e modelo}}{40}{algocf.3.2}%
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }

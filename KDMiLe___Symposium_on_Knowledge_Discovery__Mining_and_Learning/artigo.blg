@@ -1,0 +1,63 @@
+This is BibTeX, Version 0.99e (TeX Live 2026)
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: artigo.aux
+The style file: kdmile.bst
+Database file #1: referencias.bib
+Reallocated wiz_functions (elt_size=4) to 6000 items from 3000.
+Warning--empty publisher in Abadi2016
+Warning--empty publisher in Alistarh2017
+Warning--empty publisher in Bernstein2018
+Warning--empty publisher in Duchi2013
+Warning--empty publisher in Geiping2020
+Warning--empty publisher in Karimireddy2019
+Warning--empty publisher in Lin2018
+Warning--empty publisher in McMahan2017
+Warning--empty publisher in McMahan2018
+Warning--empty publisher in Mironov2017
+Warning--empty publisher in Stich2018
+Warning--empty publisher in Wangni2018
+Warning--empty publisher in Wen2017
+Warning--empty publisher in Zhao2020
+Warning--empty publisher in Zhu2019
+You've used 15 entries,
+            3079 wiz_defined-function locations,
+            821 strings with 8889 characters,
+and the built_in function-call counts, 15774 in all, are:
+= -- 1340
+> -- 1220
+< -- 15
++ -- 378
+- -- 382
+* -- 1521
+:= -- 2589
+add.period$ -- 77
+call.type$ -- 15
+change.case$ -- 138
+chr.to.int$ -- 15
+cite$ -- 30
+duplicate$ -- 526
+empty$ -- 942
+format.name$ -- 438
+if$ -- 3226
+int.to.chr$ -- 1
+int.to.str$ -- 0
+missing$ -- 30
+newline$ -- 80
+num.names$ -- 150
+pop$ -- 181
+preamble$ -- 1
+purify$ -- 228
+quote$ -- 0
+skip$ -- 475
+stack$ -- 0
+substring$ -- 850
+swap$ -- 226
+text.length$ -- 15
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 300
+warning$ -- 15
+while$ -- 139
+width$ -- 0
+write$ -- 231
+(There were 15 warnings)

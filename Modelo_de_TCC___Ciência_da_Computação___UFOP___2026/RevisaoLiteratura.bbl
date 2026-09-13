@@ -1,0 +1,254 @@
+\providecommand{\abntreprintinfo}[1]{%
+ \citeonline{#1}}
+\setlength{\labelsep}{0pt}\begin{thebibliography}{}
+\providecommand{\abntrefinfo}[3]{}
+\providecommand{\abntbstabout}[1]{}
+\abntbstabout{v<VERSION> }
+
+\bibitem[Abadi et al. 2016]{Abadi2016}
+\abntrefinfo{Abadi et al.}{Abadi et al.}{2016}
+{ABADI, M.; CHU, A.; GOODFELLOW, I.; MCMAHAN, H.~B.; MIRONOV, I.; TALWAR, K.;
+  ZHANG, L. Deep learning with differential privacy. In:  \emph{Proceedings of
+  the ACM Conference on Computer and Communications Security}. Vienna: [s.n.],
+  2016. p. 308--318.}
+
+\bibitem[Alistarh et al. 2017]{Alistarh2017}
+\abntrefinfo{Alistarh et al.}{Alistarh et al.}{2017}
+{ALISTARH, D.; GRUBIC, D.; LI, J.; TOMIOKA, R.; VOJNOVIC, M. {QSGD}:
+  Communication-efficient {SGD} via gradient quantization and encoding. In:
+  \emph{Proceedings of the Conference on Neural Information Processing
+  Systems}. Long Beach: [s.n.], 2017. p. 1709--1720.}
+
+\bibitem[Bernstein et al. 2018]{Bernstein2018}
+\abntrefinfo{Bernstein et al.}{Bernstein et al.}{2018}
+{BERNSTEIN, J.; WANG, Y.-X.; AZIZZADENESHELI, K.; ANANDKUMAR, A. {signSGD}:
+  Compressed optimisation for non-convex problems. In:  \emph{Proceedings of
+  the International Conference on Machine Learning}. Stockholm: [s.n.], 2018.
+  p. 560--569.}
+
+\bibitem[Bonawitz et al. 2017]{Bonawitz2017}
+\abntrefinfo{Bonawitz et al.}{Bonawitz et al.}{2017}
+{BONAWITZ, K.; IVANOV, V.; KREUTER, B.; MARCEDONE, A.; MCMAHAN, H.~B.; PATEL,
+  S.; RAMAGE, D.; SEGAL, A.; SETH, K. Practical secure aggregation for
+  privacy-preserving machine learning. In:  \emph{Proceedings of the ACM
+  Conference on Computer and Communications Security}. Dallas: [s.n.], 2017. p.
+  1175--1191.}
+
+\bibitem[Cohen 1988]{Cohen1988}
+\abntrefinfo{Cohen}{Cohen}{1988}
+{COHEN, J. \emph{Statistical Power Analysis for the Behavioral Sciences}. 2.
+  ed. Hillsdale: Lawrence Erlbaum Associates, 1988.}
+
+\bibitem[Dosovitskiy et al. 2021]{Dosovitskiy2021}
+\abntrefinfo{Dosovitskiy et al.}{Dosovitskiy et al.}{2021}
+{DOSOVITSKIY, A.; BEYER, L.; KOLESNIKOV, A.; WEISSENBORN, D.; ZHAI, X.;
+  UNTERTHINER, T.; DEHGHANI, M.; MINDERER, M.; HEIGOLD, G.; GELLY, S.;
+  USZKOREIT, J.; HOULSBY, N. An image is worth 16x16 words: Transformers for
+  image recognition at scale. In:  \emph{Proceedings of the International
+  Conference on Learning Representations}. Virtual Event: [s.n.], 2021.}
+
+\bibitem[Duchi, Jordan e Wainwright 2013]{Duchi2013}
+\abntrefinfo{Duchi, Jordan e Wainwright}{Duchi; Jordan; Wainwright}{2013}
+{DUCHI, J.~C.; JORDAN, M.~I.; WAINWRIGHT, M.~J. Local privacy and statistical
+  minimax rates. In:  \emph{Proceedings of the IEEE Symposium on Foundations of
+  Computer Science}. Berkeley: [s.n.], 2013. p. 429--438.}
+
+\bibitem[Dwork et al. 2006]{Dwork2006}
+\abntrefinfo{Dwork et al.}{Dwork et al.}{2006}
+{DWORK, C.; MCSHERRY, F.; NISSIM, K.; SMITH, A. Calibrating noise to
+  sensitivity in private data analysis. In:  \emph{Proceedings of the Theory of
+  Cryptography Conference}. Berlin: Springer, 2006.  (Lecture Notes in Computer
+  Science, v.~3876), p. 265--284.}
+
+\bibitem[Dwork e Roth 2014]{Dwork2014}
+\abntrefinfo{Dwork e Roth}{Dwork; Roth}{2014}
+{DWORK, C.; ROTH, A. The algorithmic foundations of differential privacy.
+\emph{Foundations and Trends in Theoretical Computer Science}, v.~9, n.~3--4,
+  p. 211--407, 2014.}
+
+\bibitem[Geiping et al. 2020]{Geiping2020}
+\abntrefinfo{Geiping et al.}{Geiping et al.}{2020}
+{GEIPING, J.; BAUERMEISTER, H.; DR{\"O}GE, H.; MOELLER, M. Inverting gradients
+  -- how easy is it to break privacy in federated learning? In:
+  \emph{Proceedings of the Conference on Neural Information Processing
+  Systems}. Virtual Event: [s.n.], 2020. p. 16937--16947.}
+
+\bibitem[Goodfellow, Bengio e Courville 2016]{Goodfellow2016}
+\abntrefinfo{Goodfellow, Bengio e Courville}{Goodfellow; Bengio;
+  Courville}{2016}
+{GOODFELLOW, I.; BENGIO, Y.; COURVILLE, A. \emph{Deep Learning}. Cambridge: MIT
+  Press, 2016.}
+
+\bibitem[Huang et al. 2021]{Huang2021}
+\abntrefinfo{Huang et al.}{Huang et al.}{2021}
+{HUANG, Y.; GUPTA, S.; SONG, Z.; LI, K.; ARORA, S. Evaluating gradient
+  inversion attacks and defenses in federated learning. In:  \emph{Proceedings
+  of the Conference on Neural Information Processing Systems}. Virtual Event:
+  [s.n.], 2021. p. 7232--7241.}
+
+\bibitem[Kairouz et al. 2021]{Kairouz2021}
+\abntrefinfo{Kairouz et al.}{Kairouz et al.}{2021}
+{KAIROUZ, P.; MCMAHAN, H.~B.; AVENT, B.; BELLET, A.; BENNIS, M.; BHAGOJI,
+  A.~N.; BONAWITZ, K.; CHARLES, Z.; CORMODE, G.; CUMMINGS, R. et al. Advances
+  and open problems in federated learning.
+\emph{Foundations and Trends in Machine Learning}, v.~14, n.~1--2, p. 1--210,
+  2021.}
+
+\bibitem[Karimireddy et al. 2019]{Karimireddy2019}
+\abntrefinfo{Karimireddy et al.}{Karimireddy et al.}{2019}
+{KARIMIREDDY, S.~P.; REBJOCK, Q.; STICH, S.~U.; JAGGI, M. Error feedback fixes
+  {SignSGD} and other gradient compression schemes. In:  \emph{Proceedings of
+  the International Conference on Machine Learning}. Long Beach: [s.n.], 2019.
+  p. 3252--3261.}
+
+\bibitem[Kingma e Ba 2015]{Kingma2015}
+\abntrefinfo{Kingma e Ba}{Kingma; Ba}{2015}
+{KINGMA, D.~P.; BA, J. Adam: A method for stochastic optimization. In:
+  \emph{Proceedings of the International Conference on Learning
+  Representations}. San Diego: [s.n.], 2015.}
+
+\bibitem[Krizhevsky 2009]{Krizhevsky2009}
+\abntrefinfo{Krizhevsky}{Krizhevsky}{2009}
+{KRIZHEVSKY, A. \emph{Learning Multiple Layers of Features from Tiny Images}.
+  2009. Relatório técnico. Toronto: University of Toronto.}
+
+\bibitem[LeCun et al. 1998]{LeCun1998}
+\abntrefinfo{LeCun et al.}{LeCun et al.}{1998}
+{LECUN, Y.; BOTTOU, L.; BENGIO, Y.; HAFFNER, P. Gradient-based learning applied
+  to document recognition.
+\emph{Proceedings of the IEEE}, v.~86, n.~11, p. 2278--2324, 1998.}
+
+\bibitem[Lin et al. 2018]{Lin2018}
+\abntrefinfo{Lin et al.}{Lin et al.}{2018}
+{LIN, Y.; HAN, S.; MAO, H.; WANG, Y.; DALLY, W.~J. Deep gradient compression:
+  Reducing the communication bandwidth for distributed training. In:
+  \emph{Proceedings of the International Conference on Learning
+  Representations}. Vancouver: [s.n.], 2018.}
+
+\bibitem[Liu e Nocedal 1989]{Liu1989}
+\abntrefinfo{Liu e Nocedal}{Liu; Nocedal}{1989}
+{LIU, D.~C.; NOCEDAL, J. On the limited memory {BFGS} method for large scale
+  optimization.
+\emph{Mathematical Programming}, v.~45, n.~1--3, p. 503--528, 1989.}
+
+\bibitem[McMahan et al. 2017]{McMahan2017}
+\abntrefinfo{McMahan et al.}{McMahan et al.}{2017}
+{MCMAHAN, H.~B.; MOORE, E.; RAMAGE, D.; HAMPSON, S.; {AG{\"U}ERA Y ARCAS}, B.
+  Communication-efficient learning of deep networks from decentralized data.
+  In:  \emph{Proceedings of the International Conference on Artificial
+  Intelligence and Statistics}. Fort Lauderdale: [s.n.], 2017. p. 1273--1282.}
+
+\bibitem[McMahan et al. 2018]{McMahan2018}
+\abntrefinfo{McMahan et al.}{McMahan et al.}{2018}
+{MCMAHAN, H.~B.; RAMAGE, D.; TALWAR, K.; ZHANG, L. Learning differentially
+  private recurrent language models. In:  \emph{Proceedings of the
+  International Conference on Learning Representations}. Vancouver: [s.n.],
+  2018.}
+
+\bibitem[Melis et al. 2019]{Melis2019}
+\abntrefinfo{Melis et al.}{Melis et al.}{2019}
+{MELIS, L.; SONG, C.; {DE CRISTOFARO}, E.; SHMATIKOV, V. Exploiting unintended
+  feature leakage in collaborative learning. In:  \emph{Proceedings of the IEEE
+  Symposium on Security and Privacy}. San Francisco: [s.n.], 2019. p.
+  691--706.}
+
+\bibitem[Mironov 2017]{Mironov2017}
+\abntrefinfo{Mironov}{Mironov}{2017}
+{MIRONOV, I. R{\'e}nyi differential privacy. In:  \emph{Proceedings of the IEEE
+  Computer Security Foundations Symposium}. Santa Barbara: [s.n.], 2017. p.
+  263--275.}
+
+\bibitem[Mitchell 1997]{Mitchell1997}
+\abntrefinfo{Mitchell}{Mitchell}{1997}
+{MITCHELL, T.~M. \emph{Machine Learning}. New York: McGraw-Hill, 1997.}
+
+\bibitem[Rudin, Osher e Fatemi 1992]{Rudin1992}
+\abntrefinfo{Rudin, Osher e Fatemi}{Rudin; Osher; Fatemi}{1992}
+{RUDIN, L.~I.; OSHER, S.; FATEMI, E. Nonlinear total variation based noise
+  removal algorithms.
+\emph{Physica D: Nonlinear Phenomena}, v.~60, n.~1--4, p. 259--268, 1992.}
+
+\bibitem[Rumelhart, Hinton e Williams 1986]{Rumelhart1986}
+\abntrefinfo{Rumelhart, Hinton e Williams}{Rumelhart; Hinton; Williams}{1986}
+{RUMELHART, D.~E.; HINTON, G.~E.; WILLIAMS, R.~J. Learning representations by
+  back-propagating errors.
+\emph{Nature}, v.~323, n.~6088, p. 533--536, 1986.}
+
+\bibitem[Shokri e Shmatikov 2015]{Shokri2015}
+\abntrefinfo{Shokri e Shmatikov}{Shokri; Shmatikov}{2015}
+{SHOKRI, R.; SHMATIKOV, V. Privacy-preserving deep learning. In:
+  \emph{Proceedings of the ACM Conference on Computer and Communications
+  Security}. Denver: [s.n.], 2015. p. 1310--1321.}
+
+\bibitem[Stich, Cordonnier e Jaggi 2018]{Stich2018}
+\abntrefinfo{Stich, Cordonnier e Jaggi}{Stich; Cordonnier; Jaggi}{2018}
+{STICH, S.~U.; CORDONNIER, J.-B.; JAGGI, M. Sparsified {SGD} with memory. In:
+  \emph{Proceedings of the Conference on Neural Information Processing
+  Systems}. Montreal: [s.n.], 2018. p. 4447--4458.}
+
+\bibitem[Sun et al. 2021]{Sun2021}
+\abntrefinfo{Sun et al.}{Sun et al.}{2021}
+{SUN, J.; LI, A.; WANG, B.; YANG, H.; LI, H.; CHEN, Y. Soteria: Provable
+  defense against privacy leakage in federated learning from representation
+  perspective. In:  \emph{Proceedings of the IEEE/CVF Conference on Computer
+  Vision and Pattern Recognition}. Virtual Event: [s.n.], 2021. p. 9311--9319.}
+
+\bibitem[Vaswani et al. 2017]{Vaswani2017}
+\abntrefinfo{Vaswani et al.}{Vaswani et al.}{2017}
+{VASWANI, A.; SHAZEER, N.; PARMAR, N.; USZKOREIT, J.; JONES, L.; GOMEZ, A.~N.;
+  KAISER, {\L}.; POLOSUKHIN, I. Attention is all you need. In:
+  \emph{Proceedings of the Conference on Neural Information Processing
+  Systems}. Long Beach: [s.n.], 2017. p. 5998--6008.}
+
+\bibitem[Wangni et al. 2018]{Wangni2018}
+\abntrefinfo{Wangni et al.}{Wangni et al.}{2018}
+{WANGNI, J.; WANG, J.; LIU, J.; ZHANG, T. Gradient sparsification for
+  communication-efficient distributed optimization. In:  \emph{Proceedings of
+  the Conference on Neural Information Processing Systems}. Montreal: [s.n.],
+  2018. p. 1299--1309.}
+
+\bibitem[Wei et al. 2020]{Wei2020}
+\abntrefinfo{Wei et al.}{Wei et al.}{2020}
+{WEI, W.; LIU, L.; LOPER, M.; CHOW, K.-H.; GURSOY, M.~E.; TRUEX, S.; WU, Y. A
+  framework for evaluating client privacy leakages in federated learning. In:
+  \emph{Proceedings of the European Symposium on Research in Computer
+  Security}. Cham: Springer, 2020.  (Lecture Notes in Computer Science, v.
+  12308), p. 545--566.}
+
+\bibitem[Welch 1947]{Welch1947}
+\abntrefinfo{Welch}{Welch}{1947}
+{WELCH, B.~L. The generalization of ``{Student's}'' problem when several
+  different population variances are involved.
+\emph{Biometrika}, v.~34, n.~1--2, p. 28--35, 1947.}
+
+\bibitem[Wen et al. 2017]{Wen2017}
+\abntrefinfo{Wen et al.}{Wen et al.}{2017}
+{WEN, W.; XU, C.; YAN, F.; WU, C.; WANG, Y.; CHEN, Y.; LI, H. {TernGrad}:
+  Ternary gradients to reduce communication in distributed deep learning. In:
+  \emph{Proceedings of the Conference on Neural Information Processing
+  Systems}. Long Beach: [s.n.], 2017. p. 1509--1519.}
+
+\bibitem[Xiao, Rasul e Vollgraf 2017]{Xiao2017}
+\abntrefinfo{Xiao, Rasul e Vollgraf}{Xiao; Rasul; Vollgraf}{2017}
+{XIAO, H.; RASUL, K.; VOLLGRAF, R. \emph{Fashion-MNIST: a Novel Image Dataset
+  for Benchmarking Machine Learning Algorithms}. 2017. ArXiv:1708.07747.}
+
+\bibitem[Yin et al. 2021]{Yin2021}
+\abntrefinfo{Yin et al.}{Yin et al.}{2021}
+{YIN, H.; MALLYA, A.; VAHDAT, A.; ALVAREZ, J.~M.; KAUTZ, J.; MOLCHANOV, P. See
+  through gradients: Image batch recovery via {GradInversion}. In:
+  \emph{Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern
+  Recognition}. Virtual Event: [s.n.], 2021. p. 16337--16346.}
+
+\bibitem[Zhao, Mopuri e Bilen 2020]{Zhao2020}
+\abntrefinfo{Zhao, Mopuri e Bilen}{Zhao; Mopuri; Bilen}{2020}
+{ZHAO, B.; MOPURI, K.~R.; BILEN, H. \emph{{iDLG}: Improved Deep Leakage from
+  Gradients}. 2020. ArXiv:2001.02610.}
+
+\bibitem[Zhu, Liu e Han 2019]{Zhu2019}
+\abntrefinfo{Zhu, Liu e Han}{Zhu; Liu; Han}{2019}
+{ZHU, L.; LIU, Z.; HAN, S. Deep leakage from gradients. In:  \emph{Proceedings
+  of the Conference on Neural Information Processing Systems}. Vancouver:
+  [s.n.], 2019. p. 14774--14784.}
+
+\end{thebibliography}

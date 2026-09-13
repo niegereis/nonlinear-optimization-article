@@ -1,0 +1,80 @@
+\begin{thebibliography}{}
+
+\bibitem[\protect\citeauthoryear{Abadi, Chu, Goodfellow, McMahan, Mironov, Talwar, and Zhang}{Abadi et~al\mbox{.}}{2016}]{Abadi2016}
+{\sc Abadi, M.}, {\sc Chu, A.}, {\sc Goodfellow, I.}, {\sc McMahan, H.~B.}, {\sc Mironov, I.}, {\sc Talwar, K.}, {\sc and} {\sc Zhang, L.}
+\newblock {Deep Learning with Differential Privacy}.
+\newblock In {\em Proceedings of the ACM Conference on Computer and Communications Security}. Vienna, Austria, pp.\  308--318, 2016.
+
+\bibitem[\protect\citeauthoryear{Alistarh, Grubic, Li, Tomioka, and Vojnovic}{Alistarh et~al\mbox{.}}{2017}]{Alistarh2017}
+{\sc Alistarh, D.}, {\sc Grubic, D.}, {\sc Li, J.}, {\sc Tomioka, R.}, {\sc and} {\sc Vojnovic, M.}
+\newblock {QSGD: Communication-Efficient SGD via Gradient Quantization and Encoding}.
+\newblock In {\em Proceedings of the Conference on Neural Information Processing Systems}. Long Beach, USA, pp.\  1707--1718, 2017.
+
+\bibitem[\protect\citeauthoryear{Bernstein, Wang, Lopez-Paz, and Recht}{Bernstein et~al\mbox{.}}{2018}]{Bernstein2018}
+{\sc Bernstein, J.}, {\sc Wang, Y.-X.}, {\sc Lopez-Paz, D.}, {\sc and} {\sc Recht, B.}
+\newblock {signSGD: Compressed Optimisation for Non-Convex Problems}.
+\newblock In {\em Proceedings of the International Conference on Machine Learning}. Stockholm, Sweden, pp.\  560--569, 2018.
+
+\bibitem[\protect\citeauthoryear{Duchi, Jordan, and Wainwright}{Duchi et~al\mbox{.}}{2013}]{Duchi2013}
+{\sc Duchi, J.~C.}, {\sc Jordan, M.~I.}, {\sc and} {\sc Wainwright, M.~J.}
+\newblock {Local Privacy and Statistical Minimax Rates}.
+\newblock In {\em Proceedings of the IEEE Symposium on Foundations of Computer Science}. Berkeley, USA, pp.\  429--438, 2013.
+
+\bibitem[\protect\citeauthoryear{Geiping, Fowl, Tramer, Faghri, Chen, Goldblum, and Goldstein}{Geiping et~al\mbox{.}}{2020}]{Geiping2020}
+{\sc Geiping, J.}, {\sc Fowl, L.~H.}, {\sc Tramer, F.}, {\sc Faghri, F.}, {\sc Chen, R.~T.}, {\sc Goldblum, M.}, {\sc and} {\sc Goldstein, T.}
+\newblock {Inverting Gradients -- How Easy is it to Break Privacy in Federated Learning?}
+\newblock In {\em Proceedings of the Conference on Neural Information Processing Systems}. Virtual Event, pp.\  16937--16947, 2020.
+
+\bibitem[\protect\citeauthoryear{Karimireddy, Rebjock, Stich, and Jaggi}{Karimireddy et~al\mbox{.}}{2019}]{Karimireddy2019}
+{\sc Karimireddy, S.~P.}, {\sc Rebjock, Q.}, {\sc Stich, S.~U.}, {\sc and} {\sc Jaggi, M.}
+\newblock {Error Feedback Fixes SignSGD and other Gradient Compression Schemes}.
+\newblock In {\em Proceedings of the International Conference on Machine Learning}. Long Beach, USA, pp.\  3252--3261, 2019.
+
+\bibitem[\protect\citeauthoryear{Lin, Han, Mao, Wang, and Dally}{Lin et~al\mbox{.}}{2018}]{Lin2018}
+{\sc Lin, Y.}, {\sc Han, S.}, {\sc Mao, H.}, {\sc Wang, Y.}, {\sc and} {\sc Dally, W.~J.}
+\newblock {Deep Gradient Compression: Reducing the Communication Bandwidth for Distributed Training}.
+\newblock In {\em Proceedings of the International Conference on Learning Representations}. Vancouver, Canada, pp.\  1--14, 2018.
+\newblock ICLR 2018, OpenReview: openreview.net/forum?id=SkhQHMW0W.
+
+\bibitem[\protect\citeauthoryear{McMahan, Moore, Ramage, Hampson, and y~Arcas}{McMahan et~al\mbox{.}}{2017}]{McMahan2017}
+{\sc McMahan, H.~B.}, {\sc Moore, E.}, {\sc Ramage, D.}, {\sc Hampson, S.}, {\sc and} {\sc y~Arcas, B.~A.}
+\newblock {Communication-Efficient Learning of Deep Networks from Decentralized Data}.
+\newblock In {\em Proceedings of the International Conference on Artificial Intelligence and Statistics}. Fort Lauderdale, USA, pp.\  1273--1282, 2017.
+
+\bibitem[\protect\citeauthoryear{McMahan, Ramage, Talwar, and Zhang}{McMahan et~al\mbox{.}}{2018}]{McMahan2018}
+{\sc McMahan, H.~B.}, {\sc Ramage, D.}, {\sc Talwar, K.}, {\sc and} {\sc Zhang, L.}
+\newblock {Learning Differentially Private Recurrent Language Models}.
+\newblock In {\em Proceedings of the International Conference on Learning Representations}. Vancouver, Canada, pp.\  1--14, 2018.
+\newblock ICLR 2018, OpenReview: openreview.net/forum?id=BJ0hF1Z0b.
+
+\bibitem[\protect\citeauthoryear{Mironov}{Mironov}{2017}]{Mironov2017}
+{\sc Mironov, I.}
+\newblock {R\'{e}nyi Differential Privacy}.
+\newblock In {\em Proceedings of the IEEE Computer Security Foundations Symposium}. Santa Barbara, USA, pp.\  263--275, 2017.
+
+\bibitem[\protect\citeauthoryear{Stich, Cordonnier, and Jaggi}{Stich et~al\mbox{.}}{2018}]{Stich2018}
+{\sc Stich, S.~U.}, {\sc Cordonnier, J.-B.}, {\sc and} {\sc Jaggi, M.}
+\newblock {Sparsified SGD with Memory}.
+\newblock In {\em Proceedings of the Conference on Neural Information Processing Systems}. Montreal, Canada, pp.\  4447--4458, 2018.
+
+\bibitem[\protect\citeauthoryear{Wangni, Wang, Liu, and Zhang}{Wangni et~al\mbox{.}}{2018}]{Wangni2018}
+{\sc Wangni, J.}, {\sc Wang, J.}, {\sc Liu, J.}, {\sc and} {\sc Zhang, T.}
+\newblock {Gradient Sparsification for Communication-Efficient Distributed Optimization}.
+\newblock In {\em Proceedings of the Conference on Neural Information Processing Systems}. Montreal, Canada, pp.\  1299--1309, 2018.
+
+\bibitem[\protect\citeauthoryear{Wen, Xie, Yan, Yuan, and Li}{Wen et~al\mbox{.}}{2017}]{Wen2017}
+{\sc Wen, W.}, {\sc Xie, C.}, {\sc Yan, F.}, {\sc Yuan, C.}, {\sc and} {\sc Li, H.}
+\newblock {TernGrad: Ternary Gradients to Reduce Communication in Distributed Deep Learning}.
+\newblock In {\em Proceedings of the Conference on Neural Information Processing Systems}. Long Beach, USA, pp.\  1509--1519, 2017.
+
+\bibitem[\protect\citeauthoryear{Zhao, Mopuri, and Bilen}{Zhao et~al\mbox{.}}{2020}]{Zhao2020}
+{\sc Zhao, B.}, {\sc Mopuri, K.~R.}, {\sc and} {\sc Bilen, H.}
+\newblock {iDLG: Improved Deep Leakage from Gradients}.
+\newblock In {\em Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition}. Seattle, USA, pp.\  14714--14722, 2020.
+
+\bibitem[\protect\citeauthoryear{Zhu, Liu, and Han}{Zhu et~al\mbox{.}}{2019}]{Zhu2019}
+{\sc Zhu, L.}, {\sc Liu, Z.}, {\sc and} {\sc Han, S.}
+\newblock {Deep Leakage from Gradients}.
+\newblock In {\em Proceedings of the Conference on Neural Information Processing Systems}. Vancouver, Canada, pp.\  14774--14784, 2019.
+
+\end{thebibliography}

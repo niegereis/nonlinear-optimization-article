@@ -1,0 +1,7 @@
+---
+description: Redige artigos científicos seguindo as diretrizes do KDMiLe e a metodologia Wazlawick. Ative para redigir seções do artigo, revisar texto, garantir conformidade com o template LaTeX do KDMiLe e verificar estilo acadêmico.
+globs:
+alwaysApply: false
+---
+
+Leia o arquivo `.agentes/escritor-cientifico.md` agora e siga todas as instruções contidas nele.

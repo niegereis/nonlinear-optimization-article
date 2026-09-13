@@ -1,0 +1,13 @@
+Coloquei o experimento para gerar cinco planilhas CSV e várias figuras na pasta figuras_grid. Tudo sai do notebook experimento_grid_defesas.ipynb (que eu estou rodando localmente), treinei MLP, CNN e ViT em MNIST, Fashion-MNIST e CIFAR-10, com defesas no gradiente (none, topk, dpsgd, randomk, qsgd) e batch 1 ou 32 (a arquitetura que combinamos). São 30 repetições por configuração no total, 90 configs e 2.700 treinos.
+
+A planilha resultados_grid_privacidade_utilidade.csv é o dado bruto do treino, uma linha por execução. Tem a config (arquitetura, dataset, defesa, batch), hiperparâmetros, loss e acurácia no fim, seed/repetição e o caminho do checkpoint. 
+
+A resultados_grid_historico_epocas.csv vem do mesmo treino, mas por época. Cada linha é uma época de um run, com loss e acurácia naquela época. Aqui treinei só 1 época, então ela tem o mesmo número de linhas que a de utilidade (2.700) e os números batem com o final.
+
+A resultados_grid_resumo_medias.csv junta as 2.700 linhas em 90 (média e desvio por config, sem repetir seed). As figuras de acurácia (tradeoff_test_acc.png e os acc_barras_*.png por dataset) saem dos dados brutos de utilidade, não desse resumo.
+
+No lado privacidade, medi se dá para reconstruir imagem a partir do gradiente. A recon_mse_privacidade_detalhe.csv tem 1.350 linhas, 30 imagens por combinação dataset/arquitetura/defesa, com MSE da reconstrução, rótulo certo vs inferido. O ataque usa só checkpoint com batch 32 e repetição 0, na planilha de treino tem batch 1 e as 30 reps.
+
+A recon_mse_privacidade_resumo.csv agrega isso em 45 linhas (dataset × arquitetura × defesa), com MSE médio, desvio e acurácia do rótulo inferido. É a tabela com resumo de privacidade.
+
+As figuras em figuras_grid/: os recon_* mostram exemplo visual (original vs reconstruções), mse_privacidade_barras_* e mse_privacidade_curvas_* resumem MSE por defesa, tradeoff_mse_acc_global.png junta privacidade (MSE) com utilidade (acurácia), tradeoff_test_acc.png e acc_barras_* são só do treino

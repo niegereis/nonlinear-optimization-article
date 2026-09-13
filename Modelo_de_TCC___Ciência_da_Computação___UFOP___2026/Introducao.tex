@@ -1,0 +1,44 @@
+%================================================================%
+%======  Atividade 3 - Introdução (Monografia I) =================%
+% Documento de entrega contendo apenas o capítulo de Introdução. %
+% O mesmo capítulo é incluído em Monografia.tex.                 %
+%================================================================%
+\documentclass[12pt, oneside, a4paper, english, brazil, sumario=tradicional]{abntex2}
+
+\input{structure}
+
+% -- Informações para Capa e Folha de Rosto: ---------------
+\titulo{Compromisso entre Privacidade e Utilidade em Defesas contra Ataques de Inversão de Gradientes}
+\subtitulo{Introdução}
+\autor{Niege Marryany dos Reis da Silva} \autorcite{Silva, Niege Marryany dos Reis da}
+\local{Ouro Preto} \uf{MG}
+\data{2026} \ano{2026}
+\orientador{Prof. Dr. Rodrigo Cesar Pedrosa Silva}
+\ttorientador{Universidade Federal de Ouro Preto}
+\coorientador[]{}
+\instituicao{Universidade Federal de Ouro Preto} \sigla{UFOP}
+\instituto{Instituto de Ciências Exatas e Biológicas}
+\departamento{Departamento de Computação}
+\curso{Ciência da Computação}
+\tipotrabalho{Introdução da Monografia I}
+\grau{Bacharel em Ciência da Computação}
+
+\begin{document}
+\frenchspacing
+
+\pagenumbering{roman}
+\imprimircapa
+\imprimirfolhaderosto
+
+\pdfbookmark[0]{\contentsname}{toc}
+\tableofcontents*
+\cleardoublepage
+
+\pagenumbering{arabic} \setcounter{page}{1}
+\textual
+\input{Capitulos/Cap1-Introducao}
+
+\postextual
+\bibliography{bibliografia}
+
+\end{document}

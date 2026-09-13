@@ -1,0 +1,40 @@
+\changetocdepth {4}
+\babel@toc {brazil}{}\relax 
+\contentsline {chapter}{\chapternumberline {2}Revisão Bibliográfica}{1}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Fundamentação Teórica}{1}{section.2.1}%
+\contentsline {subsection}{\numberline {2.1.1}Aprendizado de Máquina Supervisionado}{1}{subsection.2.1.1}%
+\contentsline {subsection}{\numberline {2.1.2}Treinamento de Redes Neurais por Gradiente}{2}{subsection.2.1.2}%
+\contentsline {subsubsection}{\numberline {2.1.2.1}O Gradiente Carrega Informação sobre os Dados}{3}{subsubsection.2.1.2.1}%
+\contentsline {subsection}{\numberline {2.1.3}Arquiteturas de Redes Neurais}{5}{subsection.2.1.3}%
+\contentsline {subsubsection}{\numberline {2.1.3.1}Perceptron Multicamadas}{5}{subsubsection.2.1.3.1}%
+\contentsline {subsubsection}{\numberline {2.1.3.2}Redes Neurais Convolucionais}{5}{subsubsection.2.1.3.2}%
+\contentsline {subsubsection}{\numberline {2.1.3.3}Vision Transformer}{6}{subsubsection.2.1.3.3}%
+\contentsline {subsection}{\numberline {2.1.4}Conjuntos de Dados de Referência}{6}{subsection.2.1.4}%
+\contentsline {subsection}{\numberline {2.1.5}Aprendizado Federado}{7}{subsection.2.1.5}%
+\contentsline {subsection}{\numberline {2.1.6}Ataques de Inversão de Gradientes}{9}{subsection.2.1.6}%
+\contentsline {subsubsection}{\numberline {2.1.6.1}Deep Leakage from Gradients (DLG)}{9}{subsubsection.2.1.6.1}%
+\contentsline {subsubsection}{\numberline {2.1.6.2}Improved Deep Leakage from Gradients (iDLG)}{10}{subsubsection.2.1.6.2}%
+\contentsline {subsubsection}{\numberline {2.1.6.3}Inverting Gradients}{11}{subsubsection.2.1.6.3}%
+\contentsline {subsubsection}{\numberline {2.1.6.4}Otimizador L-BFGS}{12}{subsubsection.2.1.6.4}%
+\contentsline {subsubsection}{\numberline {2.1.6.5}Fatores que Influenciam o Sucesso do Ataque}{12}{subsubsection.2.1.6.5}%
+\contentsline {subsection}{\numberline {2.1.7}Privacidade Diferencial}{12}{subsection.2.1.7}%
+\contentsline {subsubsection}{\numberline {2.1.7.1}DP-SGD}{13}{subsubsection.2.1.7.1}%
+\contentsline {subsubsection}{\numberline {2.1.7.2}Variantes de Privacidade Diferencial}{15}{subsubsection.2.1.7.2}%
+\contentsline {subsection}{\numberline {2.1.8}Compressão e Esparsificação de Gradientes}{15}{subsection.2.1.8}%
+\contentsline {subsubsection}{\numberline {2.1.8.1}Esparsificação Top-$k$}{15}{subsubsection.2.1.8.1}%
+\contentsline {subsubsection}{\numberline {2.1.8.2}Esparsificação Random-$k$}{16}{subsubsection.2.1.8.2}%
+\contentsline {subsubsection}{\numberline {2.1.8.3}QSGD}{17}{subsubsection.2.1.8.3}%
+\contentsline {subsubsection}{\numberline {2.1.8.4}Comparação no Exemplo Guia}{18}{subsubsection.2.1.8.4}%
+\contentsline {subsubsection}{\numberline {2.1.8.5}Outras Técnicas de Compressão}{18}{subsubsection.2.1.8.5}%
+\contentsline {subsection}{\numberline {2.1.9}Métricas de Avaliação}{19}{subsection.2.1.9}%
+\contentsline {subsubsection}{\numberline {2.1.9.1}Erro Quadrático Médio de Reconstrução}{19}{subsubsection.2.1.9.1}%
+\contentsline {subsubsection}{\numberline {2.1.9.2}Acurácia de Inferência de Rótulo}{19}{subsubsection.2.1.9.2}%
+\contentsline {subsubsection}{\numberline {2.1.9.3}Acurácia de Teste}{20}{subsubsection.2.1.9.3}%
+\contentsline {subsubsection}{\numberline {2.1.9.4}Teste $t$ de Welch e Tamanho de Efeito}{20}{subsubsection.2.1.9.4}%
+\contentsline {section}{\numberline {2.2}Trabalhos Relacionados}{21}{section.2.2}%
+\contentsline {subsection}{\numberline {2.2.1}Vazamento de Privacidade em Aprendizado Colaborativo}{21}{subsection.2.2.1}%
+\contentsline {subsection}{\numberline {2.2.2}Ataques de Reconstrução a partir de Gradientes}{22}{subsection.2.2.2}%
+\contentsline {subsection}{\numberline {2.2.3}Defesas e Avaliações Empíricas}{23}{subsection.2.2.3}%
+\contentsline {subsection}{\numberline {2.2.4}Síntese e Posicionamento deste Trabalho}{24}{subsection.2.2.4}%
+\vspace {\cftbeforepartskip }
+\contentsline {chapter}{Refer\^encias}{26}{chapter*.11}%
