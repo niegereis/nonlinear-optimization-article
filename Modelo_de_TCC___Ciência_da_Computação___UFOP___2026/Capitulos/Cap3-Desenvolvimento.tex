@@ -1,225 +1,119 @@
-\chapter{Desenvolvimento} \label{desenvolvimento}
+\chapter{Metodologia} \label{desenvolvimento}
 
-Este capítulo descreve como o estudo foi conduzido, desde o planejamento do experimento até a forma como cada métrica foi calculada. O objetivo é que o leitor compreenda não apenas o que foi feito, mas também por que cada decisão foi tomada, de modo que os resultados apresentados no Capítulo~\ref{resultado} possam ser interpretados corretamente e, se desejado, reproduzidos. Sempre que uma escolha de implementação se afasta da formulação teórica apresentada no Capítulo~\ref{RevisaoBibliografica}, a diferença é explicitada e suas consequências são discutidas.
+Este capítulo descreve como o estudo foi conduzido. O objetivo foi comparar, sob as mesmas condições, cinco configurações aplicadas ao gradiente durante o treinamento, medindo ao mesmo tempo a proteção oferecida contra um ataque de inversão de gradientes e o custo imposto à qualidade do modelo. O adversário considerado é o descrito na Seção~\ref{sec:ameaca}: honesto, porém curioso, e não adaptativo. O procedimento completo está resumido no fluxograma da Figura~\ref{fig:fluxograma} e detalhado na Seção~\ref{sec:passos}.
 
-O capítulo segue a ordem natural do experimento. A Seção~\ref{sec:ambiente} apresenta o ambiente de implementação, e a Seção~\ref{sec:desenho} descreve o desenho experimental. As Seções~\ref{sec:dados} e~\ref{sec:arquiteturas} detalham as bases de dados e as arquiteturas utilizadas. A Seção~\ref{sec:treinamento} explica como os modelos foram treinados e como as defesas foram inseridas no treinamento, e a Seção~\ref{sec:config-defesas} descreve a configuração de cada defesa. Por fim, a Seção~\ref{sec:protocolo-ataque} apresenta o protocolo de ataque, e a Seção~\ref{sec:metricas-analise} descreve o cálculo das métricas e a análise estatística.
+\section{Base de Dados}
 
-\section{Ambiente de Implementação} \label{sec:ambiente}
-
-Todo o experimento foi implementado na linguagem Python, com a biblioteca PyTorch para a construção e o treinamento das redes neurais e a biblioteca torchvision para o carregamento das bases de dados. O código foi organizado em um caderno interativo dividido em etapas independentes: definição dos parâmetros, preparação dos dados, definição dos modelos, implementação das defesas e do treinamento, implementação do ataque e geração das análises. Essa divisão permite executar novamente apenas a etapa de ataque, sem repetir o treinamento, que é a parte mais demorada do estudo.
-
-Para garantir que o ataque fosse aplicado exatamente aos modelos produzidos no treinamento, os parâmetros de cada modelo treinado foram salvos em disco em um arquivo próprio, chamado de ponto de verificação (checkpoint). Os resultados de cada execução foram registrados em arquivos tabulares, contendo a configuração utilizada, a semente aleatória, a perda de treinamento, a acurácia de teste e o caminho do checkpoint correspondente. Os cálculos foram executados em unidade de processamento gráfico (GPU) quando disponível e, caso contrário, em processador convencional, sem alteração nos resultados esperados além do tempo de execução.
-
-\section{Desenho Experimental} \label{sec:desenho}
-
-Para comparar defesas de forma justa, é preciso garantir que as diferenças observadas sejam causadas pelas defesas, e não por outros detalhes que variem entre as execuções. Por isso, adotou-se um experimento fatorial completo, no qual todos os níveis de todos os fatores são combinados entre si, enquanto os demais elementos do experimento, como o otimizador, a taxa de aprendizado, o número de épocas e o ataque, permanecem fixos. Os quatro fatores investigados e seus níveis estão resumidos na Tabela~\ref{tab:grade}.
+Foram utilizadas três bases públicas de classificação de imagens, amplamente adotadas em estudos de ataques e defesas, em ordem crescente de dificuldade: o MNIST, com dígitos manuscritos \cite{LeCun1998}; o Fashion-MNIST, com fotografias de roupas e calçados no mesmo formato \cite{Xiao2017}; e o CIFAR-10, com fotografias coloridas de objetos e animais \cite{Krizhevsky2009}. A Tabela~\ref{tab:datasets} resume suas características, o tamanho original e a quantidade de imagens efetivamente utilizada em cada execução.
 
 \begin{table}[htb]
 \centering
-\caption{Fatores e níveis do experimento fatorial.}
-\label{tab:grade}
-\begin{tabular}{llc}
+\caption{Bases de dados utilizadas.}
+\label{tab:datasets}
+\begin{tabular}{lcccccc}
 \toprule
-Fator & Níveis & Quantidade \\
+Base & Dimensão & Classes & Treino & Teste & Treino (usado) & Teste (usado) \\
 \midrule
-Arquitetura & MLP, CNN, ViT & 3 \\
-Base de dados & MNIST, Fashion-MNIST, CIFAR-10 & 3 \\
-Defesa & sem defesa, Top-$k$, DP-SGD, Random-$k$, QSGD & 5 \\
-Tamanho do lote & 1 e 32 amostras & 2 \\
-\midrule
-Combinações & $3 \times 3 \times 5 \times 2$ & 90 \\
-Repetições por combinação & sementes distintas & 30 \\
-Total de treinamentos & $90 \times 30$ & 2.700 \\
+MNIST         & $28 \times 28 \times 1$ & 10 & 60.000 & 10.000 & 4.000 & 1.000 \\
+Fashion-MNIST & $28 \times 28 \times 1$ & 10 & 60.000 & 10.000 & 4.000 & 1.000 \\
+CIFAR-10      & $32 \times 32 \times 3$ & 10 & 50.000 & 10.000 & 4.000 & 1.000 \\
 \bottomrule
 \end{tabular}
+\legend{Fonte: \citeonline{LeCun1998}, \citeonline{Xiao2017} e \citeonline{Krizhevsky2009}.}
 \end{table}
 
-A escolha de cada fator tem uma justificativa. As três arquiteturas representam formas diferentes de processar imagens, o que permite verificar se a eficácia de uma defesa depende da estrutura do modelo. As três bases de dados apresentam dificuldade crescente, o que permite verificar se conclusões obtidas em imagens simples se mantêm em imagens mais complexas. As cinco configurações de defesa incluem uma referência sem proteção e representantes das duas famílias estudadas. Os dois tamanhos de lote correspondem a situações extremas: com uma amostra, o gradiente de cada passo reflete uma única imagem; com trinta e duas, reflete a média de várias.
+Como o estudo exigiu milhares de treinamentos, cada execução utilizou as primeiras 4.000 imagens de treino e as primeiras 1.000 de teste, sempre as mesmas, de modo que todas as configurações fossem comparadas sobre exatamente as mesmas imagens. Esse recorte reduz a acurácia atingível e é retomado na Seção~\ref{sec:ameacas-validade}.
 
-Redes neurais são sensíveis a fatores aleatórios, como os valores iniciais dos pesos, a ordem em que os exemplos são apresentados e, no caso das defesas DP-SGD, Random-$k$ e QSGD, o próprio sorteio realizado pela defesa. Um resultado obtido com uma única execução poderia, portanto, refletir um sorteio favorável ou desfavorável. Para reduzir esse efeito, cada combinação foi executada 30 vezes, cada uma com uma semente aleatória diferente. A semente de cada execução foi definida de forma determinística por:
+\section{Procedimento Experimental} \label{sec:passos}
 
-\begin{equation} \label{eq:semente}
-\text{semente} = 42 + 30 \cdot i_{\text{config}} + i_{\text{rep}}
-\end{equation}
+\begin{enumerate}
+  \item As imagens foram convertidas para o intervalo $[0, 1]$ e normalizadas canal a canal, subtraindo-se a média e dividindo-se pelo desvio-padrão da base, conforme a Equação~\ref{eq:normalizacao}. Os valores adotados foram $\mu = 0{,}1307$ e $\sigma = 0{,}3081$ no MNIST, $\mu = 0{,}2860$ e $\sigma = 0{,}3530$ no Fashion-MNIST e $\mu = (0{,}4914;\ 0{,}4822;\ 0{,}4465)$ e $\sigma = (0{,}2470;\ 0{,}2435;\ 0{,}2616)$ no CIFAR-10. Como a reconstrução do ataque ocorre nesse mesmo espaço normalizado, as imagens são convertidas de volta à escala de pixels antes do cálculo das métricas.
 
-\noindent onde:
-\begin{description}
-  \item[$i_{\text{config}}$] = índice da combinação na grade, de $0$ a $89$;
-  \item[$i_{\text{rep}}$] = índice da repetição, de $0$ a $29$.
-\end{description}
+  \begin{equation} \label{eq:normalizacao}
+  \tilde{x} = \frac{x - \mu}{\sigma}
+  \end{equation}
 
-Por exemplo, a primeira combinação da grade, que corresponde ao MLP no MNIST, sem defesa e com lote de uma amostra, utiliza as sementes de $42$ a $71$; a combinação seguinte, idêntica exceto pelo lote de trinta e duas amostras, utiliza as sementes de $72$ a $101$; e a última execução da grade utiliza a semente $42 + 30 \times 89 + 29 = 2.741$. Essa regra garante que nenhuma semente se repita e que qualquer execução possa ser reproduzida isoladamente. A mesma semente é aplicada aos geradores aleatórios do Python, da biblioteca NumPy e do PyTorch, tanto no processador quanto na GPU.
+  \item Três arquiteturas compactas foram implementadas, cobrindo vieses indutivos distintos:
+  \begin{itemize}
+    \item MLP: duas camadas totalmente conectadas de 512 e 256 neurônios com ReLU e camada de saída com 10 neurônios;
+    \item CNN: duas camadas convolucionais de 32 e 64 filtros $3 \times 3$, cada uma seguida de ReLU e max-pooling $2 \times 2$, e classificador denso de 256 neurônios;
+    \item ViT: patches de $4 \times 4$ pixels projetados em vetores de dimensão 128, token de classe, codificação posicional aprendida e 4 blocos Transformer com 4 cabeças de atenção.
+  \end{itemize}
 
-\section{Bases de Dados e Pré-processamento} \label{sec:dados}
+  \item Cinco configurações foram aplicadas ao gradiente, com parâmetros fixos em todas as combinações:
+  \begin{itemize}
+    \item sem defesa: gradiente inalterado, usado como referência;
+    \item Top-$k$: retenção dos 10\% maiores valores absolutos, conforme a Equação~\ref{eq:topk};
+    \item Random-$k$: retenção de 10\% das posições sorteadas, sem reescala, conforme a Equação~\ref{eq:randk};
+    \item recorte e ruído: recorte do gradiente por norma $C = 1{,}0$ seguido de ruído gaussiano com $\sigma = 1{,}0$, inspirado no DP-SGD da Equação~\ref{eq:dpsgd}, mas sem recorte por exemplo e sem contabilização de orçamento, conforme discutido na Seção~\ref{sec:ameacas-validade};
+    \item QSGD: quantização estocástica em $s = 16$ níveis, conforme a Equação~\ref{eq:qsgd}.
+  \end{itemize}
 
-Foram utilizadas as bases MNIST, Fashion-MNIST e CIFAR-10, descritas na Seção~\ref{sec:fundamentacao}. As duas primeiras contêm imagens em tons de cinza de $28 \times 28$ pixels, e a terceira contém imagens coloridas de $32 \times 32$ pixels, com três canais de cor. Todas possuem dez classes.
+  \item Em cada iteração do treinamento, o gradiente de todos os parâmetros foi concatenado em um único vetor, a defesa foi aplicada a esse vetor e somente o resultado foi usado na atualização. O protocolo simula uma rodada de um único cliente, sem agregação entre participantes, que é o cenário mais favorável ao adversário discutido na Seção~\ref{sec:fl}.
 
-Treinar 2.700 modelos com as bases completas exigiria um tempo computacional incompatível com o escopo do trabalho. Por isso, cada execução utilizou as primeiras 4.000 imagens do conjunto de treinamento e as primeiras 1.000 imagens do conjunto de teste de cada base. Como os subconjuntos são sempre os mesmos, todas as defesas e arquiteturas são treinadas e avaliadas exatamente sobre as mesmas imagens, o que torna a comparação justa. Durante o treinamento, a ordem das imagens é embaralhada a cada execução, de acordo com a semente correspondente.
+  \item Cada modelo foi treinado por uma época sobre as 4.000 imagens, com o otimizador Adam, taxa de aprendizado $\eta = 10^{-3}$ e perda de entropia cruzada. Com lotes de 32 amostras, uma época corresponde a 125 atualizações; com lotes de uma amostra, a 4.000. Ao final, registrou-se a acurácia nas 1.000 imagens de teste e salvou-se o modelo treinado.
 
-Antes de serem apresentadas à rede, as imagens passam por duas transformações. Primeiro, os valores dos pixels, originalmente inteiros entre $0$ e $255$, são convertidos para o intervalo $[0, 1]$. Em seguida, cada canal é normalizado subtraindo-se sua média e dividindo-se pelo seu desvio-padrão, calculados previamente sobre a base de treinamento completa:
+  \item O ataque iDLG foi executado sobre um modelo representativo de cada combinação de base, arquitetura e defesa, correspondente ao treinamento com lote de 32 amostras na primeira repetição, totalizando 45 modelos. Para cada modelo, foram atacadas 30 imagens escolhidas de forma estratificada no conjunto de teste, três por classe, as mesmas para todas as defesas. O uso de imagens de teste garante que a mesma amostra seja atacada em todas as configurações, inclusive naquelas cujo treinamento sorteou outra ordem de apresentação. Em cada ataque, calculou-se o gradiente de uma única imagem, aplicou-se a mesma defesa do treinamento, inferiu-se o rótulo pelo sinal do gradiente do viés da última camada, conforme a Equação~\ref{eq:idlg-label}, e otimizou-se uma imagem sintética com L-BFGS para reproduzir o gradiente observado, conforme a Equação~\ref{eq:dlg}. Foram usadas 500 iterações no MLP e na CNN e 140 no ViT, cujo custo por iteração é muito maior.
 
-\begin{equation} \label{eq:normalizacao}
-\tilde{x} = \frac{x - \mu}{\sigma}
-\end{equation}
+  \item A privacidade foi medida pelo erro quadrático médio entre a imagem original e a reconstruída, conforme a Equação~\ref{eq:mse}, e pela proporção de rótulos inferidos corretamente, conforme a Equação~\ref{eq:label-acc}. Para dar escala ao erro de reconstrução, define-se um valor de referência $\mathrm{MSE}_{\text{ref}}$, calculado entre cada imagem atacada e uma imagem sorteada da mesma distribuição usada para inicializar o ataque. Esse valor indica o erro esperado quando o adversário nada recupera: defesas cujo erro se aproxima dele anulam o vazamento, enquanto valores intermediários indicam reconstrução parcial. A utilidade foi medida pela acurácia no conjunto de teste, conforme a Equação~\ref{eq:acc}.
 
-\noindent onde:
-\begin{description}
-  \item[$x$] = valor do pixel no intervalo $[0, 1]$;
-  \item[$\mu$, $\sigma$] = média e desvio-padrão do canal na base de dados;
-  \item[$\tilde{x}$] = valor normalizado, efetivamente recebido pela rede.
-\end{description}
+  \item Por fim, aplicou-se o plano de análise estatística descrito na Seção~\ref{sec:analise}.
+\end{enumerate}
 
-Os valores utilizados foram $\mu = 0{,}1307$ e $\sigma = 0{,}3081$ para o MNIST, $\mu = 0{,}2860$ e $\sigma = 0{,}3530$ para o Fashion-MNIST e, para os canais vermelho, verde e azul do CIFAR-10, $\mu = (0{,}4914;\ 0{,}4822;\ 0{,}4465)$ e $\sigma = (0{,}2470;\ 0{,}2435;\ 0{,}2616)$. Como exemplo, um pixel cinza médio do MNIST, com valor $0{,}5$, é transformado em $(0{,}5 - 0{,}1307)/0{,}3081 \approx 1{,}20$, enquanto os pixels totalmente pretos e totalmente brancos passam a valer, respectivamente, $-0{,}42$ e $2{,}82$. A normalização coloca as entradas em uma escala centrada em zero, o que facilita o treinamento. Essa escala é relevante também para o ataque, pois a reconstrução é realizada nesse mesmo espaço normalizado e só depois convertida de volta para o intervalo original, como descrito na Seção~\ref{sec:metricas-analise}.
+O desenho fatorial completo, combinando três arquiteturas, três bases, cinco configurações e dois tamanhos de lote, resultou em 90 combinações. Cada combinação foi repetida 30 vezes com sementes aleatórias distintas, totalizando 2.700 treinamentos e 1.350 ataques. Todas as implementações foram feitas em Python, com as bibliotecas PyTorch e torchvision, e os modelos treinados foram salvos em disco para que o ataque fosse aplicado exatamente aos mesmos parâmetros produzidos no treinamento. O código, as sementes, os modelos treinados e os arquivos com os resultados brutos estão organizados em um repositório do projeto, o que permite reproduzir qualquer execução individual a partir de sua semente.
 
-\section{Arquiteturas} \label{sec:arquiteturas}
-
-As três arquiteturas foram implementadas em versões compactas, adequadas ao tamanho reduzido das imagens e ao grande número de treinamentos. A seguir, descreve-se o caminho que uma imagem percorre em cada uma delas.
-
-No perceptron multicamadas (MLP), a imagem é inicialmente transformada em um vetor, com $784$ valores no MNIST e no Fashion-MNIST ($28 \times 28$) e $3.072$ valores no CIFAR-10 ($32 \times 32 \times 3$). Esse vetor passa por uma camada totalmente conectada com $512$ neurônios, seguida da função ReLU, por uma segunda camada com $256$ neurônios, também seguida de ReLU, e por uma camada de saída com $10$ neurônios, um para cada classe.
-
-A rede neural convolucional (CNN) possui duas etapas de extração de características, cada uma formada por uma camada convolucional com filtros de $3 \times 3$ pixels, preenchimento nas bordas para preservar as dimensões, função ReLU e uma camada de max-pooling de $2 \times 2$, que reduz a largura e a altura pela metade. A primeira camada convolucional possui $32$ filtros e a segunda, $64$. Em uma imagem do MNIST, as dimensões evoluem de $28 \times 28$ para $14 \times 14$ após a primeira etapa e para $7 \times 7$ após a segunda, resultando em $64 \times 7 \times 7 = 3.136$ valores; no CIFAR-10, a evolução é de $32 \times 32$ para $16 \times 16$ e $8 \times 8$, resultando em $4.096$ valores. Esses valores são transformados em vetor e passam por uma camada totalmente conectada com $256$ neurônios e ReLU e, por fim, pela camada de saída com $10$ neurônios.
-
-O Vision Transformer (ViT) compacto divide a imagem em patches de $4 \times 4$ pixels, o que gera $49$ patches no MNIST e no Fashion-MNIST e $64$ no CIFAR-10. Cada patch é projetado em um vetor de dimensão $128$ por meio de uma convolução com passo igual ao tamanho do patch. A essa sequência é acrescentado um vetor adicional, chamado token de classe, cuja função é acumular a informação global da imagem, e a cada posição é somado um vetor de codificação posicional aprendido, que informa à rede a localização de cada patch. A sequência resultante passa por $4$ blocos Transformer, cada um com $4$ cabeças de atenção, camada interna de dimensão $256$, função de ativação GELU, dropout de $0{,}1$ e normalização aplicada antes de cada subcamada. Ao final, apenas o token de classe é enviado a uma camada linear que produz as pontuações das $10$ classes.
-
-A Tabela~\ref{tab:parametros} apresenta o número de parâmetros treináveis de cada arquitetura. Esse número corresponde à dimensão $d$ do gradiente que as defesas modificam e o adversário observa, e será utilizado nas próximas seções para dimensionar o efeito de cada defesa.
-
-\begin{table}[htb]
+\begin{figure}[htb]
 \centering
-\caption{Número de parâmetros treináveis de cada arquitetura.}
-\label{tab:parametros}
-\begin{tabular}{lrr}
-\toprule
-Arquitetura & MNIST e Fashion-MNIST & CIFAR-10 \\
-\midrule
-MLP & 535.818 & 1.707.274 \\
-CNN & 824.458 & 1.070.794 \\
-ViT & 539.914 & 545.930 \\
-\bottomrule
-\end{tabular}
-\end{table}
+\begin{tikzpicture}[
+  font=\small,
+  etapa/.style={draw, text width=2.5cm, minimum height=1.0cm, align=center},
+  sub/.style={draw, text width=2.5cm, align=center, font=\scriptsize, inner sep=3pt},
+  seta/.style={-{Stealth[length=2.5mm]}, thick}
+]
+\node[etapa] (base) {Base de dados};
+\node[etapa, right=0.7cm of base] (treino) {Treinamento\\com defesa};
+\node[etapa, right=0.7cm of treino] (modelo) {Modelo\\treinado};
+\node[etapa, right=0.7cm of modelo] (ataque) {Ataque iDLG};
 
-Observa-se que o tamanho do MLP triplica no CIFAR-10, pois sua primeira camada conecta cada pixel de cada canal a todos os $512$ neurônios. Na CNN, o aumento é menor, restrito à camada totalmente conectada, e no ViT é praticamente nulo, pois os blocos Transformer não dependem do tamanho da imagem. Essas diferenças influenciam tanto a quantidade de informação disponível ao adversário quanto a forma como o ruído e a compressão se distribuem entre os parâmetros.
+\node[sub, below=0.9cm of base] (bases) {MNIST\\Fashion-MNIST\\CIFAR-10\\4.000 treino\\1.000 teste};
+\node[sub, below=0.9cm of treino] (defesas) {MLP, CNN, ViT\\lotes de 1 e 32\\sem defesa\\Top-$k$, Random-$k$\\recorte e ruído\\QSGD};
+\node[sub, below=0.9cm of modelo] (util) {acurácia de teste\\(utilidade)};
+\node[sub, below=0.9cm of ataque] (metricas) {MSE de reconstrução\\acerto de rótulo\\(privacidade)};
 
-\section{Treinamento com Defesas} \label{sec:treinamento}
+\draw[seta] (base) -- (treino);
+\draw[seta] (treino) -- (modelo);
+\draw[seta] (modelo) -- (ataque);
+\draw[seta] (base) -- (bases);
+\draw[seta] (treino) -- (defesas);
+\draw[seta] (modelo) -- (util);
+\draw[seta] (ataque) -- (metricas);
+\end{tikzpicture}
+\caption{Fluxograma da metodologia.}
+\label{fig:fluxograma}
+\end{figure}
 
-Cada modelo foi treinado por uma única época, isto é, uma passagem completa pelas 4.000 imagens de treinamento, com o otimizador Adam, taxa de aprendizado $\eta = 10^{-3}$ e perda de entropia cruzada. Com lotes de $32$ amostras, uma época corresponde a $125$ atualizações dos parâmetros; com lotes de uma amostra, a $4.000$ atualizações. O treinamento curto foi adotado para viabilizar as 2.700 execuções e reflete o cenário de um participante que contribui com poucas atualizações, mas limita a acurácia máxima atingível, especialmente no CIFAR-10.
+\section{Análise Estatística e Critério de Decisão} \label{sec:analise}
 
-O protocolo simula um único cliente, sem agregação entre múltiplos participantes. A defesa é aplicada em todas as iterações do treinamento, no ponto em que o gradiente seria compartilhado em um sistema federado: depois que o gradiente é calculado e antes que ele seja utilizado para atualizar o modelo. O procedimento de cada iteração começa com a passagem de um lote pela rede e o cálculo da perda. Em seguida, a retropropagação calcula o gradiente de todos os parâmetros, e esses gradientes, que pertencem a camadas diferentes e têm formatos diferentes, são concatenados em um único vetor de dimensão $d$. A defesa é aplicada a esse vetor completo, que é então separado novamente nos formatos originais e devolvido às camadas. Por fim, o otimizador Adam atualiza os parâmetros utilizando apenas o gradiente modificado. O Algoritmo~\ref{alg:treino-defesa} formaliza esse procedimento.
+As comparações foram organizadas em dois grupos. São confirmatórias as comparações entre cada defesa e o cenário sem defesa, dentro de uma mesma base e arquitetura, que testam diretamente as hipóteses H1 e H2 do Capítulo~1. São exploratórias as comparações entre arquiteturas, entre bases e entre tamanhos de lote, que orientam a discussão da hipótese H3 sem suporte confirmatório.
 
-\begin{algorithm2e}[H]
-\caption{Treinamento de uma época com defesa aplicada ao gradiente}
-\label{alg:treino-defesa}
-\KwIn{modelo $f_\theta$, subconjunto de treinamento com 4.000 imagens, tamanho do lote $B$, defesa $\mathcal{C}$, taxa $\eta$}
-\KwOut{modelo treinado $f_\theta$}
-Embaralhar as imagens de acordo com a semente da execução\;
-\ForEach{lote $\mathcal{B}$ de tamanho $B$}{
-  $\ell \leftarrow$ entropia cruzada de $f_\theta(\mathcal{B})$\;
-  calcular $\nabla_\theta \ell$ por retropropagação\;
-  $g \leftarrow$ concatenação dos gradientes de todas as camadas em um vetor de dimensão $d$\;
-  $\tilde{g} \leftarrow \mathcal{C}(g)$\tcp*{aplicação da defesa}
-  devolver $\tilde{g}$ às camadas, no formato original de cada uma\;
-  atualizar $\theta$ com Adam usando $\tilde{g}$ e taxa $\eta$\;
-}
-\Return{$f_\theta$}\;
-\end{algorithm2e}
+Para a utilidade, a unidade de análise é a execução de treinamento: cada combinação dispõe de 30 observações independentes, uma por semente. Para a privacidade, a unidade de análise é a imagem atacada: cada combinação dispõe de até 30 observações, obtidas sobre um único modelo treinado. Essa assimetria tem uma consequência importante. Como as 30 reconstruções de uma mesma configuração compartilham o mesmo modelo e o mesmo sorteio da defesa, elas não são inteiramente independentes, e a variabilidade entre treinamentos não é capturada. Os testes sobre o erro de reconstrução devem, portanto, ser lidos como evidência sobre aquele modelo específico, e não como estimativa da variabilidade de toda a população de modelos.
 
-Aplicar a defesa ao vetor completo, e não camada por camada, tem uma consequência importante: a seleção dos valores mantidos pelo Top-$k$ e o recorte do DP-SGD consideram o modelo como um todo. Assim, uma camada cujos gradientes são naturalmente maiores pode concentrar a maior parte dos valores preservados, enquanto outras camadas podem ter quase todos os seus gradientes descartados. Ao final da época, o modelo é avaliado nas 1.000 imagens de teste, e sua acurácia é registrada. Os parâmetros são então salvos no checkpoint correspondente à execução.
+As diferenças foram avaliadas pelo teste $t$ de Welch, conforme a Equação~\ref{eq:welch}, com nível de significância $\alpha = 0{,}05$, e sua magnitude foi quantificada pelo $d$ de Cohen, conforme a Equação~\ref{eq:cohen}. Como são realizadas 36 comparações confirmatórias, quatro defesas em nove combinações de base e arquitetura, a probabilidade de ao menos um falso positivo seria elevada sem ajuste. Por isso, reportam-se o valor-$p$ bruto e o valor corrigido pelo método de Holm, e a significância é declarada apenas quando o valor corrigido permanece abaixo de $\alpha$. O tamanho de efeito é reportado em todos os casos, pois diferenças significativas podem ser pequenas e diferenças não significativas podem ser grandes com amostras reduzidas.
 
-\section{Configuração das Defesas} \label{sec:config-defesas}
+O número de 30 observações por configuração foi escolhido por ser suficiente para detectar, com o teste de Welch e $\alpha = 0{,}05$, efeitos grandes na escala do $d$ de Cohen, da ordem de $0{,}8$ ou mais, com poder próximo de $0{,}8$. Efeitos pequenos ou moderados podem, portanto, passar despercebidos, o que reforça a necessidade de interpretar resultados não significativos como ausência de evidência, e não como evidência de ausência.
 
-As defesas foram configuradas com parâmetros fixos, iguais para todas as arquiteturas e bases de dados, a fim de manter a comparação uniforme. Esta seção descreve cada uma delas tal como implementada, utilizando o MLP no MNIST, com $d = 535.818$ parâmetros, como exemplo para dimensionar seus efeitos.
+Por fim, o critério para identificar as configurações com melhor equilíbrio entre privacidade e utilidade foi definido antes da análise dos resultados. Considera-se preferível toda configuração não dominada, isto é, aquela para a qual nenhuma outra apresente simultaneamente erro de reconstrução maior e acurácia maior, dentro da mesma base e arquitetura. Entre as configurações não dominadas, destacam-se as que preservam ao menos 90\% da acurácia obtida sem defesa e, ao mesmo tempo, aumentam o erro de reconstrução de forma estatisticamente sustentada após a correção de Holm.
 
-A configuração sem defesa devolve o gradiente inalterado e serve como referência para medir o quanto cada defesa altera a privacidade e a utilidade.
+\section{Ameaças à Validade e Decisões de Implementação} \label{sec:ameacas-validade}
 
-Na esparsificação Top-$k$, a taxa de retenção foi fixada em $\rho = 10\%$. O número de valores mantidos é calculado como a parte inteira de $\rho \cdot d$, com mínimo de um valor. No MLP do MNIST, são mantidos os $53.581$ valores de maior magnitude absoluta, considerando todas as camadas em conjunto, e os demais $482.237$ valores são substituídos por zero. Não foi utilizado o mecanismo de memória de \citeonline{Stich2018}, que acumula os valores descartados para reincorporá-los nas iterações seguintes; os valores zerados em uma iteração são, portanto, definitivamente perdidos.
+Esta seção reúne as decisões que limitam o alcance das conclusões, separadas entre as que afetam a validade interna, isto é, a correção das comparações feitas, e as que afetam a validade externa, isto é, a generalização para outros cenários.
 
-Na esparsificação Random-$k$, a mesma quantidade de valores é mantida, com $\rho = 10\%$, mas as posições são sorteadas com igual probabilidade a cada iteração, sem considerar a magnitude. Os valores mantidos não são reescalados, o que corresponde a $\gamma = 1$ na Equação~\ref{eq:randk}. Em consequência, o gradiente transmitido tem, em média, apenas um décimo da magnitude do gradiente original, o que equivale, na prática, a reduzir o passo de atualização de forma aleatória em cada coordenada.
+Quanto à validade interna, três pontos merecem destaque. O primeiro é que o mecanismo de recorte e ruído foi aplicado ao gradiente médio do lote, e não ao gradiente de cada exemplo, e o ruído não foi dividido pelo tamanho do lote; as duas formulações coincidem apenas quando o lote tem uma amostra. Como também não se utilizou nenhum contador de orçamento de privacidade, esse braço do experimento não implementa privacidade diferencial e não autoriza nenhuma afirmação sobre garantias $(\varepsilon, \delta)$. Soma-se a isso que, com $\sigma C = 1$ em cada uma das centenas de milhares de coordenadas, o ruído supera em várias ordens de grandeza o gradiente recortado, de modo que os resultados desse braço descrevem um regime de ruído dominante, e não o custo da privacidade diferencial em orçamentos usuais.
 
-A implementação do DP-SGD difere da formulação original de \citeonline{Abadi2016} em um aspecto que precisa ser destacado. No método original, o recorte é aplicado ao gradiente de cada exemplo individualmente, antes do cálculo da média do lote. Neste trabalho, o recorte foi aplicado uma única vez ao gradiente médio do lote, já concatenado em um vetor de dimensão $d$, seguido da adição de ruído gaussiano a cada coordenada:
+O segundo ponto é o cálculo do erro de reconstrução. No CIFAR-10, os valores desnormalizados são limitados ao intervalo $[0, 1]$ antes do cálculo, o que não ocorre no MNIST e no Fashion-MNIST. Nessas duas bases, o erro pode ultrapassar $1$, e os valores não devem ser comparados diretamente com os do CIFAR-10; as comparações entre defesas são sempre feitas dentro de uma mesma base e arquitetura.
 
-\begin{equation} \label{eq:dpsgd-impl}
-\tilde{g} = g \cdot \min\!\left(1, \frac{C}{\|g\|_2}\right) + \mathcal{N}\big(0, (\sigma C)^2 I_d\big)
-\end{equation}
+O terceiro é que o gradiente atacado não corresponde exatamente à mensagem que o cliente enviaria. O treinamento utiliza lotes de uma ou de 32 amostras, enquanto o ataque observa o gradiente de uma única imagem; além disso, as métricas de privacidade foram obtidas sobre um único modelo por configuração, sem replicação entre sementes. A combinação dessas duas escolhas significa que os resultados de privacidade representam o vazamento máximo observável em uma amostra isolada, em um modelo específico, e não a média esperada sobre as rodadas de um treinamento federado.
 
-\noindent onde:
-\begin{description}
-  \item[$g$] = gradiente médio do lote, concatenado em um vetor de dimensão $d$;
-  \item[$C$] = limite de norma, fixado em $1{,}0$;
-  \item[$\sigma$] = multiplicador de ruído, fixado em $1{,}0$;
-  \item[$I_d$] = matriz identidade de dimensão $d$, indicando ruído independente em cada coordenada.
-\end{description}
+Quanto à validade externa, o protocolo simula um único cliente, sem agregação, enquanto o aprendizado federado real envolve múltiplos participantes e muitas rodadas. A agregação tende a reduzir o vazamento, de modo que as medidas aqui obtidas são conservadoras do ponto de vista da privacidade; já as medidas de utilidade não se transferem diretamente, pois a acurácia sob FedAvg depende do número de rodadas e da distribuição dos dados entre clientes. No mesmo sentido, o treinamento por uma única época sobre 4.000 imagens mede o custo da defesa no início do aprendizado, e não seu custo assintótico, o que pode favorecer ou penalizar de forma desigual defesas que apenas retardam a convergência.
 
-Com lote de uma amostra, as duas formulações coincidem. Com lote de trinta e duas amostras, porém, o recorte não limita a contribuição de cada exemplo individualmente, e o ruído não é dividido pelo tamanho do lote. Além disso, nenhum mecanismo de contabilização do orçamento de privacidade foi utilizado. Por essas razões, o DP-SGD deste trabalho deve ser entendido como um mecanismo empírico de recorte e ruído inspirado no método original, sem a garantia formal $(\varepsilon, \delta)$ discutida na Seção~\ref{sec:dp}.
-
-A escala desse ruído ajuda a entender seu efeito. Após o recorte, o gradiente tem norma de no máximo $1$. O ruído, por sua vez, possui desvio-padrão $1$ em cada uma das $d$ coordenadas, e sua norma esperada é aproximadamente:
-
-\begin{equation} \label{eq:norma-ruido}
-\mathbb{E}\big[\|\mathcal{N}(0, I_d)\|_2\big] \approx \sqrt{d}
-\end{equation}
-
-No MLP do MNIST, isso corresponde a $\sqrt{535.818} \approx 732$; no MLP do CIFAR-10, a $\sqrt{1.707.274} \approx 1.307$. Em outras palavras, o vetor efetivamente utilizado na atualização é composto por um sinal de tamanho no máximo $1$ somado a um ruído centenas de vezes maior. Essa proporção antecipa que o DP-SGD, com os parâmetros adotados, tende a dificultar fortemente o ataque, sobretudo a inferência do rótulo, que depende do sinal do gradiente, mas também a comprometer severamente o aprendizado do modelo.
-
-Na quantização QSGD, foram utilizados $s = 16$ níveis, com a norma L2 do gradiente completo como referência, conforme a Equação~\ref{eq:qsgd}. Cada coordenada é arredondada para um múltiplo de $\|g\|_2/16$, para cima ou para baixo, por sorteio, preservando o sinal. Um aspecto pouco intuitivo dessa defesa aparece quando o gradiente possui muitas coordenadas. Se a energia do gradiente estiver distribuída de maneira aproximadamente uniforme, cada coordenada terá magnitude relativa próxima de $1/\sqrt{d}$, e a probabilidade de ela ser arredondada para o primeiro nível, e não para zero, será aproximadamente:
-
-\begin{equation} \label{eq:qsgd-prob}
-P(\text{coordenada não nula}) \approx \frac{s}{\sqrt{d}}
-\end{equation}
-
-\noindent onde $s$ é o número de níveis e $d$ é a dimensão do gradiente. No MLP do MNIST, essa probabilidade é de aproximadamente $16/732 \approx 2{,}2\%$. Assim, em modelos com centenas de milhares de parâmetros, a maior parte das coordenadas pequenas é transmitida como zero, enquanto as poucas que sobrevivem são transmitidas com valor $\pm \|g\|_2/16$, muito maior que o original. O QSGD comporta-se, portanto, de forma semelhante a uma esparsificação aleatória com reescala, mantendo o valor esperado de cada coordenada, mas introduzindo grande variância. As coordenadas de magnitude elevada, por outro lado, tendem a ser preservadas com seu sinal, o que é relevante para a inferência de rótulo.
-
-\section{Protocolo de Ataque} \label{sec:protocolo-ataque}
-
-O ataque tem como objetivo medir quanta informação sobre uma imagem pode ser recuperada a partir do gradiente produzido por um modelo treinado com cada defesa. Como executar o ataque sobre todos os 2.700 modelos seria computacionalmente inviável, foi selecionado um modelo representativo para cada combinação de base de dados, arquitetura e defesa: o modelo treinado com lote de trinta e duas amostras na primeira repetição. Isso resulta em $3 \times 3 \times 5 = 45$ modelos atacados. O fator tamanho do lote, portanto, influencia apenas as métricas de utilidade, e não as de privacidade.
-
-As imagens atacadas foram retiradas do conjunto de teste de cada base, de forma estratificada: três imagens de cada uma das dez classes, sorteadas com uma semente fixa, totalizando $30$ imagens por base. As mesmas imagens foram utilizadas para todas as arquiteturas e defesas de uma mesma base, de modo que as diferenças de reconstrução não possam ser atribuídas à escolha de imagens mais fáceis ou mais difíceis. No total, foram realizados $45 \times 30 = 1.350$ ataques.
-
-Cada ataque simula um cliente que compartilha o gradiente calculado sobre uma única imagem, que é o cenário mais favorável ao adversário discutido na Seção~\ref{sec:fl}. O procedimento, formalizado no Algoritmo~\ref{alg:ataque}, começa com o modelo treinado em modo de avaliação, no qual o dropout do ViT é desativado. Calcula-se o gradiente da perda sobre a imagem-alvo e aplica-se a esse gradiente a mesma defesa utilizada no treinamento daquele modelo, com uma semente própria para cada imagem e defesa. O resultado é o gradiente defendido, único dado ao qual o adversário tem acesso.
-
-A partir desse gradiente, o adversário infere o rótulo da imagem seguindo o princípio do iDLG. Em vez de somar as linhas do gradiente dos pesos da última camada, como na Equação~\ref{eq:idlg-label}, utiliza-se o gradiente do viés dessa camada, que, pela Equação~\ref{eq:grad-linear}, é exatamente a derivada da perda em relação a cada logit:
-
-\begin{equation} \label{eq:idlg-bias}
-\hat{c} = \arg\min_{j} \; \frac{\partial \ell}{\partial b_{L,j}} = \arg\min_{j} \; \frac{\partial \ell}{\partial z_j}
-\end{equation}
-
-\noindent onde $b_{L,j}$ é o viés da classe $j$ na última camada. Sem defesa, apenas a classe correta possui derivada negativa, e a regra identifica o rótulo com certeza. Quando a defesa altera o gradiente do viés, seja zerando-o, adicionando ruído ou arredondando-o, a regra pode falhar.
-
-Com o rótulo fixado, o adversário cria uma imagem sintética com valores sorteados de uma distribuição normal com média zero e desvio-padrão $0{,}25$, no espaço normalizado, e a ajusta para minimizar a soma dos quadrados das diferenças entre o gradiente que ela produz e o gradiente defendido, considerando todos os parâmetros do modelo, conforme a Equação~\ref{eq:dlg}. A otimização utiliza o L-BFGS com taxa de aprendizado $1$, executado em blocos de $20$ iterações. Para o MLP e a CNN, foram executados $25$ blocos, totalizando $500$ iterações; para o ViT, cujo custo por iteração é muito maior devido às derivadas de segunda ordem do mecanismo de atenção, foram executados $7$ blocos, totalizando $140$ iterações. Após cada bloco, os valores da imagem sintética são limitados ao intervalo $[-4, 4]$, que abrange com folga os valores normalizados válidos de todas as bases, por exemplo, de $-0{,}42$ a $2{,}82$ no MNIST, e evita que a otimização produza valores extremos.
-
-\begin{algorithm2e}[H]
-\caption{Protocolo de ataque aplicado a cada imagem e modelo}
-\label{alg:ataque}
-\KwIn{modelo treinado $f_\theta$ com defesa $\mathcal{C}$, imagem-alvo $(x, y)$, número de blocos $R$}
-\KwOut{imagem reconstruída $x'$, rótulo inferido $\hat{c}$}
-colocar $f_\theta$ em modo de avaliação\;
-$g \leftarrow \nabla_\theta \, \ell\big(f_\theta(x), y\big)$\tcp*{gradiente de uma única imagem}
-$\tilde{g} \leftarrow \mathcal{C}(g)$\tcp*{gradiente observado pelo adversário}
-$\hat{c} \leftarrow \arg\min_j \tilde{g}_{b_{L,j}}$\tcp*{inferência do rótulo}
-$x' \leftarrow$ amostra de $\mathcal{N}(0, 0{,}25^2)$ com as dimensões da imagem\;
-\For{$r = 1, \dots, R$}{
-  executar 20 iterações de L-BFGS minimizando $\big\| \nabla_\theta \ell\big(f_\theta(x'), \hat{c}\big) - \tilde{g} \big\|_2^2$\;
-  limitar os valores de $x'$ ao intervalo $[-4, 4]$\;
-}
-\Return{$x'$, $\hat{c}$}\;
-\end{algorithm2e}
-
-Vale observar que, embora o adversário conheça a defesa utilizada, o ataque não foi adaptado a ela. O gradiente sintético é comparado diretamente com o gradiente defendido, sem que a defesa seja aplicada também ao gradiente sintético e sem nenhum tratamento específico para o ruído ou para os valores zerados. Trata-se, portanto, de um adversário não adaptativo, e os resultados de privacidade devem ser interpretados como a proteção contra esse tipo de ataque.
-
-\section{Métricas e Análise Estatística} \label{sec:metricas-analise}
-
-A privacidade foi medida pelo erro quadrático médio de reconstrução e pela acurácia de inferência de rótulo, e a utilidade, pela acurácia de teste, conforme definido na Seção~\ref{sec:metricas}. Esta seção descreve como essas métricas foram calculadas na prática.
-
-Como a reconstrução é realizada no espaço normalizado, tanto a imagem original quanto a reconstruída são convertidas de volta para a escala de pixels antes do cálculo do MSE, invertendo a Equação~\ref{eq:normalizacao}:
-
-\begin{equation} \label{eq:desnormalizacao}
-x = \tilde{x} \cdot \sigma + \mu
-\end{equation}
-
-Por exemplo, se a imagem reconstruída do MNIST possuir um pixel com valor normalizado $1{,}20$, esse pixel corresponderá a $1{,}20 \times 0{,}3081 + 0{,}1307 \approx 0{,}50$ na escala original. No CIFAR-10, os valores desnormalizados são ainda limitados ao intervalo $[0, 1]$ antes do cálculo. No MNIST e no Fashion-MNIST, essa limitação não é aplicada, de modo que pixels reconstruídos podem assumir valores fora do intervalo válido. No MNIST, por exemplo, quando a imagem sintética atinge os limites de $-4$ e $4$, os pixels desnormalizados valem $-4 \times 0{,}3081 + 0{,}1307 \approx -1{,}10$ e $4 \times 0{,}3081 + 0{,}1307 \approx 1{,}36$; no Fashion-MNIST, chegam a $-1{,}13$ e $1{,}70$. Por essa razão, o MSE nessas duas bases pode ultrapassar $1$, o que de fato ocorreu em $340$ das $1.329$ reconstruções válidas, e os valores de MSE não devem ser comparados diretamente entre o CIFAR-10 e as bases em tons de cinza. As comparações entre defesas, que são o foco do estudo, são feitas sempre dentro de uma mesma base e arquitetura.
-
-Em algumas tentativas, a otimização do L-BFGS divergiu e produziu valores indefinidos na imagem reconstruída. Essas tentativas foram excluídas do cálculo do MSE, mas mantidas no cálculo da acurácia de inferência de rótulo, já que a inferência do rótulo ocorre antes da otimização. Ao todo, $21$ das $1.350$ reconstruções falharam, o que corresponde a $1{,}6\%$ do total. As falhas concentraram-se na CNN, especialmente no Fashion-MNIST com Random-$k$, que teve $9$ falhas, e com QSGD, que teve $7$. Como consequência, o número efetivo de reconstruções válidas por combinação variou entre $21$ e $30$.
-
-A acurácia de teste foi medida ao final da época de treinamento, sobre as 1.000 imagens de teste, para cada uma das 2.700 execuções. Para cada combinação de arquitetura, base de dados, defesa e tamanho de lote, reportam-se a média e o desvio-padrão sobre as 30 repetições. Para as métricas de privacidade, reportam-se a média e o desvio-padrão do MSE sobre as reconstruções válidas e a proporção de rótulos inferidos corretamente sobre as 30 imagens atacadas.
-
-Para verificar se cada defesa altera de forma significativa a qualidade da reconstrução, o MSE de cada defesa foi comparado ao MSE da configuração sem defesa, dentro de uma mesma base de dados e arquitetura, por meio do teste $t$ de Welch, com nível de significância $\alpha = 0{,}05$. Cada reconstrução válida foi tratada como uma observação independente. O teste de Welch foi escolhido por não exigir que os grupos tenham a mesma variância, o que é esperado, já que defesas aleatórias tendem a produzir resultados mais dispersos. A magnitude das diferenças foi quantificada pelo $d$ de Cohen, conforme a Equação~\ref{eq:cohen}, permitindo distinguir diferenças estatisticamente significativas, porém pequenas, de diferenças com impacto prático relevante.
-
-Em síntese, o desenvolvimento combina um treinamento extenso, com 2.700 execuções, que sustenta as conclusões sobre utilidade, com um protocolo de ataque controlado, com 1.350 reconstruções sobre as mesmas imagens, que sustenta as conclusões sobre privacidade. As simplificações adotadas, como o cliente único, a época única, os subconjuntos de dados, os parâmetros fixos das defesas, o DP-SGD sem garantia formal e o adversário não adaptativo, foram necessárias para tornar o estudo viável e são retomadas como limitações no Capítulo~\ref{consideracoes}.
+Por fim, os parâmetros das defesas foram mantidos fixos, com taxa de retenção de 10\%, desvio de ruído unitário e 16 níveis de quantização. O efeito da família de defesa está, portanto, confundido com o efeito da configuração escolhida, e as conclusões valem para esses ajustes específicos, não para as famílias em geral. A varredura desses parâmetros, que produziria curvas completas de compromisso entre privacidade e utilidade, e a adoção de um adversário adaptativo, capaz de incorporar a defesa ao ataque, permanecem como extensões naturais do estudo. Registra-se ainda que, em 21 das 1.350 reconstruções, a otimização divergiu e produziu valores indefinidos; essas tentativas foram excluídas do cálculo do erro de reconstrução, mas mantidas na acurácia de inferência de rótulo, que é obtida antes da otimização.

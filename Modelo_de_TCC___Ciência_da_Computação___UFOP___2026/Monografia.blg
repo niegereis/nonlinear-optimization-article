@@ -14,10 +14,6 @@ A level-1 auxiliary file: PreTextuais/ListaSimbolos.aux
 A level-1 auxiliary file: Capitulos/Cap1-Introducao.aux
 A level-1 auxiliary file: Capitulos/Cap2-RevisaoBibliografica.aux
 A level-1 auxiliary file: Capitulos/Cap3-Desenvolvimento.aux
-A level-1 auxiliary file: Capitulos/Cap4-Resultados.aux
-A level-1 auxiliary file: Capitulos/Cap5-Conclusao.aux
-A level-1 auxiliary file: PosTextuais/Apendice.aux
-A level-1 auxiliary file: PosTextuais/Anexo.aux
 The style file: abntex2-alf.bst
 Reallocated singl_function (elt_size=4) to 100 items from 50.
 Reallocated singl_function (elt_size=4) to 100 items from 50.
@@ -39,44 +35,44 @@ Reallocated glb_str_end (elt_size=4) to 20 items from 10.
 | Em caso de dúvidas ou problemas com este estilo procure |
 | http://www.abntex.net.br/                               |
 +---------------------------------------------------------+
-You've used 44 entries,
+You've used 50 entries,
             6714 wiz_defined-function locations,
-            1490 strings with 17838 characters,
-and the built_in function-call counts, 43808 in all, are:
-= -- 3301
-> -- 1832
-< -- 57
-+ -- 787
-- -- 528
-* -- 3431
-:= -- 5421
-add.period$ -- 176
-call.type$ -- 45
-change.case$ -- 522
-chr.to.int$ -- 84
-cite$ -- 41
-duplicate$ -- 1959
-empty$ -- 3257
-format.name$ -- 2748
-if$ -- 10626
+            1519 strings with 18967 characters,
+and the built_in function-call counts, 50271 in all, are:
+= -- 3745
+> -- 2170
+< -- 62
++ -- 921
+- -- 625
+* -- 3985
+:= -- 6224
+add.period$ -- 200
+call.type$ -- 51
+change.case$ -- 608
+chr.to.int$ -- 93
+cite$ -- 47
+duplicate$ -- 2227
+empty$ -- 3707
+format.name$ -- 3242
+if$ -- 12183
 int.to.chr$ -- 2
 int.to.str$ -- 3
-missing$ -- 851
-newline$ -- 181
-num.names$ -- 195
-pop$ -- 1063
+missing$ -- 969
+newline$ -- 206
+num.names$ -- 225
+pop$ -- 1222
 preamble$ -- 1
-purify$ -- 194
+purify$ -- 225
 quote$ -- 0
-skip$ -- 2544
+skip$ -- 2895
 stack$ -- 1
-substring$ -- 1803
-swap$ -- 1110
-text.length$ -- 44
+substring$ -- 1992
+swap$ -- 1249
+text.length$ -- 48
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 25
+type$ -- 31
 warning$ -- 0
-while$ -- 322
+while$ -- 364
 width$ -- 0
-write$ -- 654
+write$ -- 748

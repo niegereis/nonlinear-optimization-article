@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.6.21)  13 SEP 2026 17:58
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.6.21)  5 OCT 2026 23:46
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1349,23 +1349,21 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 (/usr/local/texlive/2026/texmf-dist/tex/latex/microtype/mt-msb.cfg
 File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
 )
-(./RevisaoLiteratura.lof [1
+(./RevisaoLiteratura.lof) [1
 
 
-]) [2] (./RevisaoLiteratura.lot) [3
+] (./RevisaoLiteratura.loa) [2
+
 
 ]
-(./RevisaoLiteratura.loa) [4
+(./PreTextuais/ListaSiglas.tex [3
 
 
-] (./PreTextuais/ListaSiglas.tex [5
+]) (./RevisaoLiteratura.toc [4
 
 
-])
-(./RevisaoLiteratura.toc [6
-
-
-]) [7] (./Capitulos/Cap2-RevisaoBibliografica.tex
+]) [5]
+(./Capitulos/Cap2-RevisaoBibliografica.tex
 Cap\'{\i }tulo 2.
 
 pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has 
@@ -1379,95 +1377,84 @@ l.33 \end{description}
 ]
 Package babel Info: 'brazil' activates 'portuges' shorthands.
 (babel)             Reported on input line 68.
- [2] [3] [4] [5] [6]
+ [2] [3] [4] [5]
 Package microtype Info: Character `029' is missing
 (microtype)             in font `T1/qtm/m/sc/12'.
 (microtype)             Ignoring protrusion settings for this character.
- [7] [8{/usr/local/texlive/2026/texmf-dist/fonts/enc/dvips/tex-gyre/q-ec-sc.enc
-}] [9] [10] [11] [12] [13]
-Overfull \hbox (2.92648pt too wide) in paragraph at lines 475--476
-\T1/qtm/m/n/12 (-20) ele-mento é di-vi-dido por $\OT1/cmr/m/n/12 2[]01$\T1/qtm/
-m/n/12 (-20) ; a li-nha de gato, por exem-plo, passa a $\OT1/cmr/m/n/12 (\OMS/c
-msy/m/n/12 ^^@\OT1/cmr/m/n/12 0[]17;  \OMS/cmsy/m/n/12 ^^@\OT1/cmr/m/n/12 0[]33
-;  \OMS/cmsy/m/n/12 ^^@\OT1/cmr/m/n/12 0[]07;  \OMS/cmsy/m/n/12 ^^@\OT1/cmr/m/n
-/12 0[]67)$\T1/qtm/m/n/12 (-20) .
- []
-
+ [6] [7{/usr/local/texlive/2026/texmf-dist/fonts/enc/dvips/tex-gyre/q-ec-sc.enc
+}] [8] [9] [10] [11] [12]
 Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             `cmtt' (encoding: T1).
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
+ [13]
 [14{/usr/local/texlive/2026/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc
 }]
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 514.
+(hyperref)                removing `math shift' on input line 445.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 514.
-
-[15]
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 532.
+(hyperref)                removing `math shift' on input line 445.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 532.
-
-[16] [17]
-Overfull \hbox (28.66779pt too wide) in paragraph at lines 625--626
- [][] 
- []
-
-[18] [19]
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 682.
+(hyperref)                removing `math shift' on input line 461.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 682.
+(hyperref)                removing `math shift' on input line 461.
 
-[20]
-Overfull \hbox (40.77457pt too wide) in paragraph at lines 705--706
+[15] [16] [17] [18]
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 553.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 553.
+
+
+Overfull \hbox (40.77457pt too wide) in paragraph at lines 576--577
 []\T1/qtm/m/n/12 (-20) Como exem-plo, su-po-nha cinco me-di-ções de MSE sem de-
 fesa, $\OT1/cmr/m/n/12 (0[]009;  0[]004;  0[]012;  0[]007;  0[]015)$\T1/qtm/m/n
 /12 (-20) ,
  []
 
 
-Overfull \hbox (79.73677pt too wide) in paragraph at lines 705--706
+Overfull \hbox (79.73677pt too wide) in paragraph at lines 576--577
 \T1/qtm/m/n/12 (-20) com mé-dia $\OT1/cmr/m/n/12 0[]0094$ \T1/qtm/m/n/12 (-20) 
 e desvio-padrão $\OT1/cmr/m/n/12 0[]0043$\T1/qtm/m/n/12 (-20) , e cinco me-di-ç
 ões com uma de-fesa, $\OT1/cmr/m/n/12 (0[]090;  0[]020;  0[]150;  0[]060;  0[]1
 10)$\T1/qtm/m/n/12 (-20) ,
  []
 
-[21] [22] [23]) [24] (./RevisaoLiteratura.bbl (./RevisaoLiteratura.brf)
+
+LaTeX Font Warning: Font shape `T1/qtm/m/sl' in size <12> not available
+(Font)              Font shape `T1/qtm/m/it' tried instead on input line 582.
+
+[19] [20] [21] [22] [23]) (./RevisaoLiteratura.bbl (./RevisaoLiteratura.brf)
 \tf@brf=\write5
 \openout5 = `RevisaoLiteratura.brf'.
 
 
-[25]
+[24]
 bibitemlist
-[26
+[25
 
-] [27]) [28]
+] [26] [27]) [28]
 \tf@lof=\write6
 \openout6 = `RevisaoLiteratura.lof'.
 
-\tf@lot=\write7
-\openout7 = `RevisaoLiteratura.lot'.
+\tf@loa=\write7
+\openout7 = `RevisaoLiteratura.loa'.
 
-\tf@loa=\write8
-\openout8 = `RevisaoLiteratura.loa'.
+\tf@toc=\write8
+\openout8 = `RevisaoLiteratura.toc'.
 
-\tf@toc=\write9
-\openout9 = `RevisaoLiteratura.toc'.
 
- 
+
 enddocument/afterlastpage (AED): lastpage setting LastPage.
 (./RevisaoLiteratura.aux)
  ***********
@@ -1479,16 +1466,16 @@ L3 programming layer <2020/03/25>
 LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
 
 Package rerunfilecheck Info: File `RevisaoLiteratura.brf' has not changed.
-(rerunfilecheck)             Checksum: 8FB1003CA80680C124951795AB6236E7;5042.
+(rerunfilecheck)             Checksum: 50CD1A74D9B6658F99F3E9320CC8C5A2;5385.
  ) 
 Here is how much of TeX's memory you used:
- 33520 strings out of 467525
- 607230 string characters out of 5418982
- 1115281 words of memory out of 5000000
- 61501 multiletter control sequences out of 15000+600000
- 698100 words of font info for 186 fonts, out of 8000000 for 9000
+ 33365 strings out of 467525
+ 604523 string characters out of 5418982
+ 1101111 words of memory out of 5000000
+ 61346 multiletter control sequences out of 15000+600000
+ 701431 words of font info for 191 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 99i,18n,107p,1620b,792s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 99i,18n,107p,1716b,793s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb
 ></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb>
 </usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><
@@ -1508,10 +1495,10 @@ e/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive
 texmf-dist/fonts/type1/public/tex-gyre/qtmr.pfb></usr/local/texlive/2026/texmf-
 dist/fonts/type1/public/tex-gyre/qtmri.pfb></usr/local/texlive/2026/texmf-dist/
 fonts/type1/public/cm-super/sftt1200.pfb>
-Output written on RevisaoLiteratura.pdf (36 pages, 414020 bytes).
+Output written on RevisaoLiteratura.pdf (34 pages, 404624 bytes).
 PDF statistics:
- 932 PDF objects out of 1000 (max. 8388607)
- 839 compressed objects within 9 object streams
- 192 named destinations out of 1000 (max. 500000)
- 42845 words of extra memory for PDF output out of 42996 (max. 10000000)
+ 915 PDF objects out of 1000 (max. 8388607)
+ 830 compressed objects within 9 object streams
+ 187 named destinations out of 1000 (max. 500000)
+ 44877 words of extra memory for PDF output out of 51595 (max. 10000000)
 

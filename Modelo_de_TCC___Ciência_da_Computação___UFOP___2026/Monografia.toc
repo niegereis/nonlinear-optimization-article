@@ -1,67 +1,47 @@
 \changetocdepth {4}
 \babel@toc {brazil}{}\relax 
 \contentsline {chapter}{\chapternumberline {1}Introdução}{1}{chapter.1}%
-\contentsline {section}{\numberline {1.1}Justificativa}{3}{section.1.1}%
-\contentsline {section}{\numberline {1.2}Objetivos}{4}{section.1.2}%
-\contentsline {section}{\numberline {1.3}Método do Trabalho}{5}{section.1.3}%
-\contentsline {section}{\numberline {1.4}Organização do Trabalho}{6}{section.1.4}%
-\contentsline {chapter}{\chapternumberline {2}Revisão Bibliográfica}{7}{chapter.2}%
-\contentsline {section}{\numberline {2.1}Fundamentação Teórica}{7}{section.2.1}%
-\contentsline {subsection}{\numberline {2.1.1}Aprendizado de Máquina Supervisionado}{7}{subsection.2.1.1}%
-\contentsline {subsection}{\numberline {2.1.2}Treinamento de Redes Neurais por Gradiente}{8}{subsection.2.1.2}%
-\contentsline {subsubsection}{\numberline {2.1.2.1}O Gradiente Carrega Informação sobre os Dados}{9}{subsubsection.2.1.2.1}%
-\contentsline {subsection}{\numberline {2.1.3}Arquiteturas de Redes Neurais}{11}{subsection.2.1.3}%
-\contentsline {subsubsection}{\numberline {2.1.3.1}Perceptron Multicamadas}{11}{subsubsection.2.1.3.1}%
-\contentsline {subsubsection}{\numberline {2.1.3.2}Redes Neurais Convolucionais}{11}{subsubsection.2.1.3.2}%
-\contentsline {subsubsection}{\numberline {2.1.3.3}Vision Transformer}{12}{subsubsection.2.1.3.3}%
-\contentsline {subsection}{\numberline {2.1.4}Conjuntos de Dados de Referência}{12}{subsection.2.1.4}%
-\contentsline {subsection}{\numberline {2.1.5}Aprendizado Federado}{13}{subsection.2.1.5}%
-\contentsline {subsection}{\numberline {2.1.6}Ataques de Inversão de Gradientes}{15}{subsection.2.1.6}%
-\contentsline {subsubsection}{\numberline {2.1.6.1}Deep Leakage from Gradients (DLG)}{15}{subsubsection.2.1.6.1}%
-\contentsline {subsubsection}{\numberline {2.1.6.2}Improved Deep Leakage from Gradients (iDLG)}{16}{subsubsection.2.1.6.2}%
-\contentsline {subsubsection}{\numberline {2.1.6.3}Inverting Gradients}{17}{subsubsection.2.1.6.3}%
-\contentsline {subsubsection}{\numberline {2.1.6.4}Otimizador L-BFGS}{18}{subsubsection.2.1.6.4}%
-\contentsline {subsubsection}{\numberline {2.1.6.5}Fatores que Influenciam o Sucesso do Ataque}{18}{subsubsection.2.1.6.5}%
-\contentsline {subsection}{\numberline {2.1.7}Privacidade Diferencial}{18}{subsection.2.1.7}%
-\contentsline {subsubsection}{\numberline {2.1.7.1}DP-SGD}{19}{subsubsection.2.1.7.1}%
-\contentsline {subsubsection}{\numberline {2.1.7.2}Variantes de Privacidade Diferencial}{21}{subsubsection.2.1.7.2}%
-\contentsline {subsection}{\numberline {2.1.8}Compressão e Esparsificação de Gradientes}{21}{subsection.2.1.8}%
-\contentsline {subsubsection}{\numberline {2.1.8.1}Esparsificação Top-$k$}{21}{subsubsection.2.1.8.1}%
-\contentsline {subsubsection}{\numberline {2.1.8.2}Esparsificação Random-$k$}{22}{subsubsection.2.1.8.2}%
-\contentsline {subsubsection}{\numberline {2.1.8.3}QSGD}{23}{subsubsection.2.1.8.3}%
-\contentsline {subsubsection}{\numberline {2.1.8.4}Comparação no Exemplo Guia}{24}{subsubsection.2.1.8.4}%
-\contentsline {subsubsection}{\numberline {2.1.8.5}Outras Técnicas de Compressão}{24}{subsubsection.2.1.8.5}%
-\contentsline {subsection}{\numberline {2.1.9}Métricas de Avaliação}{25}{subsection.2.1.9}%
-\contentsline {subsubsection}{\numberline {2.1.9.1}Erro Quadrático Médio de Reconstrução}{25}{subsubsection.2.1.9.1}%
-\contentsline {subsubsection}{\numberline {2.1.9.2}Acurácia de Inferência de Rótulo}{25}{subsubsection.2.1.9.2}%
-\contentsline {subsubsection}{\numberline {2.1.9.3}Acurácia de Teste}{26}{subsubsection.2.1.9.3}%
-\contentsline {subsubsection}{\numberline {2.1.9.4}Teste $t$ de Welch e Tamanho de Efeito}{26}{subsubsection.2.1.9.4}%
-\contentsline {section}{\numberline {2.2}Trabalhos Relacionados}{27}{section.2.2}%
-\contentsline {subsection}{\numberline {2.2.1}Vazamento de Privacidade em Aprendizado Colaborativo}{27}{subsection.2.2.1}%
-\contentsline {subsection}{\numberline {2.2.2}Ataques de Reconstrução a partir de Gradientes}{28}{subsection.2.2.2}%
-\contentsline {subsection}{\numberline {2.2.3}Defesas e Avaliações Empíricas}{29}{subsection.2.2.3}%
-\contentsline {subsection}{\numberline {2.2.4}Síntese e Posicionamento deste Trabalho}{30}{subsection.2.2.4}%
-\contentsline {chapter}{\chapternumberline {3}Desenvolvimento}{32}{chapter.3}%
-\contentsline {section}{\numberline {3.1}Ambiente de Implementação}{32}{section.3.1}%
-\contentsline {section}{\numberline {3.2}Desenho Experimental}{32}{section.3.2}%
-\contentsline {section}{\numberline {3.3}Bases de Dados e Pré-processamento}{34}{section.3.3}%
-\contentsline {section}{\numberline {3.4}Arquiteturas}{35}{section.3.4}%
-\contentsline {section}{\numberline {3.5}Treinamento com Defesas}{36}{section.3.5}%
-\contentsline {section}{\numberline {3.6}Configuração das Defesas}{37}{section.3.6}%
-\contentsline {section}{\numberline {3.7}Protocolo de Ataque}{39}{section.3.7}%
-\contentsline {section}{\numberline {3.8}Métricas e Análise Estatística}{40}{section.3.8}%
-\contentsline {chapter}{\chapternumberline {4}Resultados}{42}{chapter.4}%
-\contentsline {chapter}{\chapternumberline {5}Considerações Finais}{43}{chapter.5}%
-\contentsline {section}{\numberline {5.1}Conclusão}{43}{section.5.1}%
-\contentsline {section}{\numberline {5.2}Trabalhos Futuros}{43}{section.5.2}%
-\contentsline {section}{\numberline {5.3}Publicações Realizadas}{43}{section.5.3}%
+\contentsline {section}{\numberline {1.1}Objetivos}{3}{section.1.1}%
+\contentsline {chapter}{\chapternumberline {2}Revisão Bibliográfica}{5}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Fundamentação Teórica}{5}{section.2.1}%
+\contentsline {subsection}{\numberline {2.1.1}Aprendizado de Máquina Supervisionado}{5}{subsection.2.1.1}%
+\contentsline {subsection}{\numberline {2.1.2}Treinamento de Redes Neurais por Gradiente}{6}{subsection.2.1.2}%
+\contentsline {subsubsection}{\numberline {2.1.2.1}O Gradiente Carrega Informação sobre os Dados}{7}{subsubsection.2.1.2.1}%
+\contentsline {subsection}{\numberline {2.1.3}Arquiteturas de Redes Neurais}{8}{subsection.2.1.3}%
+\contentsline {subsubsection}{\numberline {2.1.3.1}Perceptron Multicamadas}{8}{subsubsection.2.1.3.1}%
+\contentsline {subsubsection}{\numberline {2.1.3.2}Redes Neurais Convolucionais}{8}{subsubsection.2.1.3.2}%
+\contentsline {subsubsection}{\numberline {2.1.3.3}Vision Transformer}{9}{subsubsection.2.1.3.3}%
+\contentsline {subsection}{\numberline {2.1.4}Aprendizado Federado}{9}{subsection.2.1.4}%
+\contentsline {subsection}{\numberline {2.1.5}Modelo de Ameaça}{12}{subsection.2.1.5}%
+\contentsline {subsection}{\numberline {2.1.6}Ataques de Inversão de Gradientes}{12}{subsection.2.1.6}%
+\contentsline {subsubsection}{\numberline {2.1.6.1}Deep Leakage from Gradients (DLG)}{13}{subsubsection.2.1.6.1}%
+\contentsline {subsubsection}{\numberline {2.1.6.2}Improved Deep Leakage from Gradients (iDLG)}{14}{subsubsection.2.1.6.2}%
+\contentsline {subsubsection}{\numberline {2.1.6.3}Inverting Gradients}{15}{subsubsection.2.1.6.3}%
+\contentsline {subsubsection}{\numberline {2.1.6.4}Otimizador L-BFGS}{15}{subsubsection.2.1.6.4}%
+\contentsline {subsubsection}{\numberline {2.1.6.5}Fatores que Influenciam o Sucesso do Ataque}{16}{subsubsection.2.1.6.5}%
+\contentsline {subsection}{\numberline {2.1.7}Privacidade Diferencial}{16}{subsection.2.1.7}%
+\contentsline {subsubsection}{\numberline {2.1.7.1}DP-SGD}{17}{subsubsection.2.1.7.1}%
+\contentsline {subsubsection}{\numberline {2.1.7.2}Variantes de Privacidade Diferencial}{18}{subsubsection.2.1.7.2}%
+\contentsline {subsection}{\numberline {2.1.8}Compressão e Esparsificação de Gradientes}{19}{subsection.2.1.8}%
+\contentsline {subsubsection}{\numberline {2.1.8.1}Esparsificação Top-$k$}{19}{subsubsection.2.1.8.1}%
+\contentsline {subsubsection}{\numberline {2.1.8.2}Esparsificação Random-$k$}{19}{subsubsection.2.1.8.2}%
+\contentsline {subsubsection}{\numberline {2.1.8.3}QSGD}{20}{subsubsection.2.1.8.3}%
+\contentsline {subsubsection}{\numberline {2.1.8.4}Outras Técnicas de Compressão}{21}{subsubsection.2.1.8.4}%
+\contentsline {subsection}{\numberline {2.1.9}Métricas de Avaliação}{21}{subsection.2.1.9}%
+\contentsline {subsubsection}{\numberline {2.1.9.1}Erro Quadrático Médio de Reconstrução}{21}{subsubsection.2.1.9.1}%
+\contentsline {subsubsection}{\numberline {2.1.9.2}Acurácia de Inferência de Rótulo}{22}{subsubsection.2.1.9.2}%
+\contentsline {subsubsection}{\numberline {2.1.9.3}Acurácia de Teste}{22}{subsubsection.2.1.9.3}%
+\contentsline {subsubsection}{\numberline {2.1.9.4}Teste $t$ de Welch e Tamanho de Efeito}{23}{subsubsection.2.1.9.4}%
+\contentsline {section}{\numberline {2.2}Trabalhos Relacionados}{24}{section.2.2}%
+\contentsline {subsection}{\numberline {2.2.1}Vazamento de Privacidade em Aprendizado Colaborativo}{24}{subsection.2.2.1}%
+\contentsline {subsection}{\numberline {2.2.2}Ataques de Reconstrução a partir de Gradientes}{25}{subsection.2.2.2}%
+\contentsline {subsection}{\numberline {2.2.3}Defesas e Avaliações Empíricas}{26}{subsection.2.2.3}%
+\contentsline {subsection}{\numberline {2.2.4}Síntese e Posicionamento deste Trabalho}{27}{subsection.2.2.4}%
+\contentsline {chapter}{\chapternumberline {3}Metodologia}{29}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Base de Dados}{29}{section.3.1}%
+\contentsline {section}{\numberline {3.2}Procedimento Experimental}{29}{section.3.2}%
+\contentsline {section}{\numberline {3.3}Análise Estatística e Critério de Decisão}{31}{section.3.3}%
+\contentsline {section}{\numberline {3.4}Ameaças à Validade e Decisões de Implementação}{32}{section.3.4}%
 \vspace {\cftbeforepartskip }
-\contentsline {chapter}{Refer\^encias}{44}{chapter*.28}%
-\renewcommand *{\cftappendixname }{AP\^ENDICE \space }
-\contentsline {part}{Ap\^endices}{48}{section*.29}%
-\contentsline {appendix}{\chapternumberline {A}Diferença entre Anexo e Apêndice}{49}{appendix.A}%
-\contentsline {appendix}{\chapternumberline {B}Formatação}{50}{appendix.B}%
-\cftinsert {AAA}
-\renewcommand *{\cftappendixname }{ANEXO \space }
-\contentsline {part}{Anexos}{51}{section*.30}%
-\contentsline {appendix}{\chapternumberline {A}Exemplo}{52}{appendix.anexochapback.1}%
+\contentsline {chapter}{Refer\^encias}{34}{chapter*.28}%
+\vspace {\cftbeforepartskip }

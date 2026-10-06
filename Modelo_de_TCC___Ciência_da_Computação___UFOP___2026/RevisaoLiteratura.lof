@@ -1,5 +1,3 @@
 \babel@toc {brazil}{}\relax 
-\contentsline {figure}{\numberline {2.1}{\ignorespaces Exemplo guia: modelo linear com quatro entradas e três classes, cuja classe correta é gato.}}{4}{figure.2.1}%
-\contentsline {figure}{\numberline {2.2}{\ignorespaces Fluxo de uma rodada de aprendizado federado: o servidor distribui o modelo global (azul) e os clientes devolvem apenas atualizações ou gradientes (vermelho), mantendo os dados locais.}}{8}{figure.2.2}%
-\contentsline {figure}{\numberline {2.3}{\ignorespaces Princípio dos ataques de inversão de gradientes baseados em otimização.}}{9}{figure.2.3}%
-\contentsline {figure}{\numberline {2.4}{\ignorespaces Efeito das defesas sobre o gradiente do exemplo guia e rótulo inferido pela regra do iDLG. A primeira linha é o gradiente original; células em vermelho contêm ruído, células em azul são valores mantidos e zeros em cinza são valores descartados.}}{18}{figure.2.4}%
+\contentsline {figure}{\numberline {2.1}{\ignorespaces Fluxo de uma rodada de aprendizado federado: o servidor distribui o modelo global (azul) e os clientes devolvem apenas atualizações ou gradientes (vermelho), mantendo os dados locais.}}{7}{figure.2.1}%
+\contentsline {figure}{\numberline {2.2}{\ignorespaces Princípio dos ataques de inversão de gradientes baseados em otimização.}}{9}{figure.2.2}%

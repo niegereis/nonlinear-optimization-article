@@ -402,7 +402,12 @@ INPUT ./Capitulos/Cap1-Introducao.tex
 INPUT Capitulos/Cap1-Introducao.tex
 INPUT /usr/local/texlive/2026/texmf-dist/fonts/tfm/public/tex-gyre/ec-qtmr.tfm
 INPUT /usr/local/texlive/2026/texmf-dist/fonts/tfm/public/tex-gyre/ec-qtmri.tfm
+INPUT /usr/local/texlive/2026/texmf-dist/tex/latex/tex-gyre/ts1qtm.fd
+INPUT /usr/local/texlive/2026/texmf-dist/tex/latex/tex-gyre/ts1qtm.fd
+INPUT /usr/local/texlive/2026/texmf-dist/tex/latex/tex-gyre/ts1qtm.fd
+INPUT /usr/local/texlive/2026/texmf-dist/fonts/tfm/public/tex-gyre/ts1-qtmr.tfm
 INPUT /usr/local/texlive/2026/texmf-dist/fonts/tfm/public/tex-gyre/ec-qtmb.tfm
+INPUT /usr/local/texlive/2026/texmf-dist/fonts/enc/dvips/tex-gyre/q-ts1.enc
 INPUT ./Introducao.bbl
 INPUT ./Introducao.bbl
 INPUT Introducao.bbl
@@ -412,7 +417,6 @@ INPUT Introducao.brf
 INPUT ./Introducao.brf
 INPUT ./Introducao.brf
 OUTPUT Introducao.brf
-INPUT /usr/local/texlive/2026/texmf-dist/fonts/tfm/public/tex-gyre/ec-qtmri.tfm
 INPUT /usr/local/texlive/2026/texmf-dist/fonts/tfm/public/tex-gyre/ec-qtmri.tfm
 OUTPUT Introducao.toc
 INPUT Introducao.aux

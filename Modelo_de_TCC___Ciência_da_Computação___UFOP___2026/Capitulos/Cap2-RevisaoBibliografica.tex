@@ -8,7 +8,7 @@
 \SetKw{Return}{retorna}
 \SetAlgorithmName{Algoritmo}{algoritmo}{Lista de Algoritmos}
 
-Este capítulo reúne os conceitos necessários para compreender o problema investigado e apresenta o que outros autores já estudaram sobre o tema. A Seção~\ref{sec:fundamentacao} constrói a base teórica passo a passo: começa pelo modo como uma rede neural aprende, passa pelo aprendizado federado e pelos ataques que exploram os gradientes, e termina nas defesas e nas métricas usadas para avaliá-las. Para tornar os conceitos mais concretos, um mesmo exemplo numérico, chamado aqui de exemplo guia, acompanha o leitor ao longo de toda a seção. A Seção~\ref{sec:relacionados} descreve os trabalhos relacionados e posiciona esta pesquisa em relação a eles.
+Este capítulo reúne os conceitos necessários para compreender o problema investigado e apresenta o que outros autores já estudaram sobre o tema. A Seção~\ref{sec:fundamentacao} constrói a base teórica passo a passo: começa pelo modo como uma rede neural aprende, passa pelo aprendizado federado e pelos ataques que exploram os gradientes, e termina nas defesas e nas métricas usadas para avaliá-las. Cada conceito é apresentado na forma em que será utilizado no restante do trabalho, e o fim de cada tópico indica onde ele reaparece na metodologia. A Seção~\ref{sec:relacionados} descreve os trabalhos relacionados e posiciona esta pesquisa em relação a eles.
 
 % =====================================================================
 \section{Fundamentação Teórica} \label{sec:fundamentacao}
@@ -94,68 +94,15 @@ Um ponto central para este trabalho é que o gradiente depende diretamente dos d
 \frac{\partial \ell}{\partial W_{i}} = \frac{\partial \ell}{\partial z_i} \, a^{\top}, \qquad \frac{\partial \ell}{\partial b_i} = \frac{\partial \ell}{\partial z_i}
 \end{equation}
 
-\noindent ou seja, cada linha do gradiente dos pesos é uma cópia da entrada $a$ multiplicada por um número. Para ver o que isso significa na prática, considere o exemplo a seguir, que será reutilizado ao longo de todo o capítulo.
-
-O exemplo guia consiste em um modelo com uma única camada linear que classifica entradas em três classes: avião, gato e navio. A entrada é um vetor com quatro valores não negativos, $a = (0{,}5;\ 1{,}0;\ 0{,}2;\ 2{,}0)$, que pode ser entendido como quatro características extraídas de uma imagem, e a classe correta é gato. A Figura~\ref{fig:exemplo-guia} ilustra o modelo.
-
-\begin{figure}[htb]
-\centering
-\begin{tikzpicture}[
-  font=\small,
-  ent/.style={circle, draw, fill=orange!15, minimum size=0.9cm, inner sep=0pt},
-  sai/.style={circle, draw, fill=blue!8, minimum size=0.9cm, inner sep=0pt},
-  lig/.style={gray!70}
-]
-\foreach \v [count=\i] in {0{,}5, 1{,}0, 0{,}2, 2{,}0} {
-  \node[ent] (a\i) at (0, -1.1*\i) {$\v$};
-  \node[left=0.15cm of a\i] {$a_{\i}$};
-}
-\node[sai] (z1) at (4.2, -1.65) {$1{,}0$};
-\node[sai, fill=blue!20] (z2) at (4.2, -2.75) {$0{,}5$};
-\node[sai] (z3) at (4.2, -3.85) {$-0{,}5$};
-\foreach \i in {1,...,4} \foreach \j in {1,2,3} \draw[lig] (a\i) -- (z\j);
-\node[right=0.2cm of z1, align=left] {$z_1$: avião $\;\to\; p_1 = 0{,}547$};
-\node[right=0.2cm of z2, align=left] {$z_2$: gato (correta) $\;\to\; p_2 = 0{,}331$};
-\node[right=0.2cm of z3, align=left] {$z_3$: navio $\;\to\; p_3 = 0{,}122$};
-\node[above=0.3cm of a1] {entrada $a$};
-\node at (4.2, -0.6) {logits $z = Wa + b$};
-\end{tikzpicture}
-\caption{Exemplo guia: modelo linear com quatro entradas e três classes, cuja classe correta é gato.}
-\label{fig:exemplo-guia}
-\end{figure}
-
-Suponha que os logits produzidos sejam $z = (1{,}0;\ 0{,}5;\ -0{,}5)$. Aplicando a softmax (Equação~\ref{eq:softmax-ce}), obtêm-se as probabilidades $p = (0{,}547;\ 0{,}331;\ 0{,}122)$. O modelo erra, pois considera avião a classe mais provável, e a perda é $-\log 0{,}331 \approx 1{,}10$. Como será mostrado na Seção~\ref{sec:idlg}, a derivada da perda em relação a cada logit é $p_j$ para as classes incorretas e $p_c - 1$ para a correta, isto é, $\partial \ell / \partial z = (0{,}547;\ -0{,}669;\ 0{,}122)$. Pela Equação~\ref{eq:grad-linear}, basta multiplicar cada um desses valores pela entrada $a$ para obter o gradiente dos pesos:
-
-\begin{equation} \label{eq:exemplo-grad}
-\nabla W =
-\begin{pmatrix}
- 0{,}547 \\ -0{,}669 \\ 0{,}122
-\end{pmatrix}
-\begin{pmatrix} 0{,}5 & 1{,}0 & 0{,}2 & 2{,}0 \end{pmatrix}
-=
-\begin{pmatrix}
- 0{,}27 &  0{,}55 &  0{,}11 &  1{,}09 \\
--0{,}33 & -0{,}67 & -0{,}13 & -1{,}34 \\
- 0{,}06 &  0{,}12 &  0{,}02 &  0{,}24
-\end{pmatrix}
-\begin{matrix} \leftarrow \text{avião} \\ \leftarrow \text{gato} \\ \leftarrow \text{navio} \end{matrix}
-\end{equation}
-
-Agora, imagine um adversário que recebe apenas esse gradiente. Dividindo a linha de gato pelo gradiente do viés correspondente, $\partial \ell / \partial b_2 = -0{,}669$, ele obtém:
-
-\begin{equation} \label{eq:exemplo-vazamento}
-\frac{(-0{,}334;\ -0{,}669;\ -0{,}134;\ -1{,}337)}{-0{,}669} = (0{,}5;\ 1{,}0;\ 0{,}2;\ 2{,}0)
-\end{equation}
-
-\noindent que é exatamente a entrada $a$. Em uma rede real, isso significa que a entrada de uma camada totalmente conectada pode ser recuperada a partir de seu gradiente \cite{Geiping2020}. O exemplo mostra, de forma simples, que o gradiente de uma camada pode conter uma cópia praticamente literal de sua entrada.
+\noindent ou seja, cada linha do gradiente dos pesos é uma cópia da entrada $a$ multiplicada por um número. Se essa camada for a primeira da rede, $a$ é a própria imagem e, sempre que $\partial \ell / \partial b_i \neq 0$ para alguma saída $i$, basta dividir a $i$-ésima linha do gradiente dos pesos pelo gradiente do viés correspondente para recuperar a entrada exatamente \cite{Geiping2020,Phong2018}. Essa propriedade é o ponto de partida dos ataques descritos na Seção~\ref{sec:ataques} e a razão pela qual as defesas estudadas neste trabalho atuam sobre o gradiente, e não sobre os dados.
 
 \subsection{Arquiteturas de Redes Neurais}
 
-A forma como os neurônios de uma rede são organizados é chamada de arquitetura. Cada arquitetura parte de uma suposição diferente sobre os dados, e essa escolha afeta tanto a acurácia quanto a maneira como a informação da entrada aparece nos gradientes. Três arquiteturas são utilizadas neste trabalho.
+A forma como os neurônios de uma rede são organizados é chamada de arquitetura. Cada arquitetura parte de uma suposição diferente sobre os dados, e essa escolha afeta tanto a acurácia quanto a maneira como a informação da entrada aparece nos gradientes. As três arquiteturas descritas a seguir são as avaliadas no experimento, e sua configuração exata é detalhada no Capítulo~3.
 
 \subsubsection{Perceptron Multicamadas}
 
-O perceptron multicamadas (MLP) é a arquitetura mais simples: empilha várias camadas como a do exemplo guia, intercaladas por funções de ativação não lineares. Para uma entrada $x$ transformada em vetor, a saída da camada $l$ é:
+O perceptron multicamadas (MLP) é a arquitetura mais simples: empilha várias camadas totalmente conectadas, intercaladas por funções de ativação não lineares. Para uma entrada $x$ transformada em vetor, a saída da camada $l$ é:
 
 \begin{equation} \label{eq:mlp}
 h^{(l)} = \sigma\big(W^{(l)} h^{(l-1)} + b^{(l)}\big), \qquad h^{(0)} = x
@@ -203,26 +150,6 @@ O Vision Transformer (ViT) adapta à classificação de imagens a arquitetura Tr
 \end{description}
 
 A vantagem do ViT é relacionar regiões distantes da imagem desde a primeira camada. Por não assumir que pixels vizinhos são parecidos, porém, precisa de mais dados para atingir boa acurácia \cite{Dosovitskiy2021}. Essa diferença estrutural também muda a forma como a informação sobre a imagem se distribui nos gradientes, o que motiva sua inclusão neste estudo.
-
-\subsection{Conjuntos de Dados de Referência}
-
-Para que resultados de diferentes estudos possam ser comparados, pesquisas em aprendizado de máquina costumam utilizar conjuntos de dados públicos. A Tabela~\ref{tab:datasets} resume os três conjuntos adotados neste trabalho, em ordem crescente de dificuldade. O MNIST contém dígitos manuscritos \cite{LeCun1998}; o Fashion-MNIST mantém o mesmo formato, mas com fotos de roupas e calçados, que são mais difíceis de distinguir \cite{Xiao2017}; e o CIFAR-10 contém fotografias coloridas de objetos e animais, com fundos e poses variados \cite{Krizhevsky2009}.
-
-\begin{table}[htb]
-\centering
-\caption{Conjuntos de dados de imagens utilizados como referência.}
-\label{tab:datasets}
-\begin{tabular}{lcccc}
-\toprule
-Conjunto & Dimensão & Classes & Treino & Teste \\
-\midrule
-MNIST         & $28 \times 28 \times 1$ & 10 & 60.000 & 10.000 \\
-Fashion-MNIST & $28 \times 28 \times 1$ & 10 & 60.000 & 10.000 \\
-CIFAR-10      & $32 \times 32 \times 3$ & 10 & 50.000 & 10.000 \\
-\bottomrule
-\end{tabular}
-\legend{Fonte: \citeonline{LeCun1998}, \citeonline{Xiao2017} e \citeonline{Krizhevsky2009}.}
-\end{table}
 
 \subsection{Aprendizado Federado} \label{sec:fl}
 
@@ -301,7 +228,15 @@ Inicializar $w_0$\;
 \label{fig:fl}
 \end{figure}
 
-Entre as vantagens do aprendizado federado estão a redução da exposição direta dos dados e a possibilidade de treinar com informações que jamais poderiam ser centralizadas. Por outro lado, a comunicação entre clientes e servidor é custosa, e as atualizações transmitidas ainda carregam informação sobre os dados, como mostrou o exemplo guia. O modelo de ameaça mais comum considera um servidor honesto, porém curioso: ele segue o protocolo corretamente, mas tenta descobrir informações privadas a partir do que recebe \cite{Kairouz2021}. Técnicas criptográficas como a agregação segura fazem com que o servidor conheça apenas a soma das atualizações \cite{Bonawitz2017}, mas não resolvem o problema quando poucos clientes participam de uma rodada. O pior cenário para o cliente, e por isso o mais usado nos estudos de ataque \cite{Zhu2019,Geiping2020}, ocorre quando o adversário observa o gradiente de um único cliente calculado sobre um lote pequeno.
+Entre as vantagens do aprendizado federado estão a redução da exposição direta dos dados e a possibilidade de treinar com informações que jamais poderiam ser centralizadas. Por outro lado, a comunicação entre clientes e servidor é custosa, e as atualizações transmitidas ainda carregam informação sobre os dados, como mostra a Equação~\ref{eq:grad-linear}. O modelo de ameaça mais comum considera um servidor honesto, porém curioso: ele segue o protocolo corretamente, mas tenta descobrir informações privadas a partir do que recebe \cite{Kairouz2021}. Técnicas criptográficas como a agregação segura fazem com que o servidor conheça apenas a soma das atualizações \cite{Bonawitz2017}, mas não resolvem o problema quando poucos clientes participam de uma rodada. O pior cenário para o cliente, e por isso o mais usado nos estudos de ataque \cite{Zhu2019,Geiping2020}, ocorre quando o adversário observa o gradiente de um único cliente calculado sobre um lote pequeno. É esse cenário que o protocolo experimental do Capítulo~3 reproduz.
+
+\subsection{Modelo de Ameaça} \label{sec:ameaca}
+
+Antes de descrever os ataques, é preciso definir com precisão contra quem as defesas devem proteger. Um modelo de ameaça especifica três elementos: o que o adversário conhece, o que ele consegue observar ou alterar e qual é o seu objetivo.
+
+Neste trabalho, o adversário é o servidor de agregação, ou qualquer parte capaz de observar o que um cliente envia. Ele conhece a arquitetura do modelo, os parâmetros globais da rodada corrente, os hiperparâmetros de treinamento e a defesa aplicada pelo cliente, pois nenhuma dessas informações é secreta em um sistema federado. Ele observa o gradiente já modificado pela defesa, que é a única mensagem enviada pelo cliente, e seu objetivo é reconstruir a imagem de treinamento e descobrir seu rótulo.
+
+Duas restrições delimitam o escopo. A primeira é que o adversário é honesto, porém curioso: segue o protocolo e não altera o modelo distribuído aos clientes. Trabalhos recentes mostram que um servidor disposto a enviar modelos adulterados consegue extrair dados de forma muito mais direta \cite{Fowl2022} e que até a agregação segura pode ser contornada por inconsistência de modelos \cite{Pasquini2022}; esses cenários são mais severos e não são avaliados aqui. A segunda é que o adversário é não adaptativo: ele aplica o ataque ao gradiente recebido sem ajustar o procedimento à defesa que sabe estar em uso. Um adversário adaptativo poderia, por exemplo, estimar e remover o ruído adicionado ou restringir a otimização às coordenadas não nulas. Como consequência, as medidas de privacidade obtidas neste trabalho devem ser lidas como um limite superior de proteção: uma defesa que falha contra o adversário não adaptativo certamente falha contra um adversário mais forte, mas o contrário não é verdadeiro.
 
 \subsection{Ataques de Inversão de Gradientes} \label{sec:ataques}
 
@@ -396,9 +331,7 @@ O iDLG aproveita essa propriedade da seguinte forma. Primeiro, soma os elementos
 \hat{c} = \arg\min_{j} \; \sum_{m} \big(\nabla W_{L}\big)_{j,m}
 \end{equation}
 
-\noindent Depois, com o rótulo fixado em $\hat{c}$, executa o DLG otimizando apenas a entrada $x'$, o que torna a reconstrução mais rápida e estável.
-
-No exemplo guia, as somas das linhas do gradiente da Equação~\ref{eq:exemplo-grad} são $2{,}02$ para avião, $-2{,}47$ para gato e $0{,}44$ para navio. A única soma negativa é a de gato, e o adversário descobre o rótulo correto sem nenhuma otimização. Note que o próprio modelo havia errado a previsão, apostando em avião; ainda assim, o gradiente revelou a classe verdadeira.
+\noindent Depois, com o rótulo fixado em $\hat{c}$, executa o DLG otimizando apenas a entrada $x'$, o que torna a reconstrução mais rápida e estável. Pela Equação~\ref{eq:grad-linear}, a soma de cada linha de $\nabla W_L$ é proporcional a $\partial \ell / \partial z_j$, que é exatamente o gradiente do viés daquela classe; por isso, a mesma regra pode ser aplicada diretamente ao gradiente do viés da última camada, forma adotada na implementação descrita no Capítulo~3.
 
 A vantagem do iDLG é tornar o ataque mais rápido e estável, com reconstruções mais fiéis que as do DLG. Sua limitação é depender de condições específicas: a regra de sinais funciona para uma única amostra e perde precisão quando o lote contém várias imagens. Por ser simples e eficaz no cenário de cliente único, o iDLG é o ataque adotado neste trabalho. Destaca-se ainda uma consequência importante: qualquer defesa que preserve o sinal das maiores entradas do gradiente tende a manter o rótulo exposto.
 
@@ -431,7 +364,7 @@ A vantagem do L-BFGS é convergir em poucas iterações em problemas suaves e de
 
 \subsubsection{Fatores que Influenciam o Sucesso do Ataque}
 
-A literatura aponta quatro fatores principais que tornam a inversão mais fácil ou mais difícil \cite{Geiping2020,Huang2021}. O primeiro é o tamanho do lote: quanto mais imagens contribuem para o gradiente médio, mais misturada fica a informação de cada uma. O segundo é a arquitetura, que determina quantas equações o gradiente oferece em relação ao número de pixels desconhecidos. O terceiro é o estágio do treinamento, já que modelos treinados e não treinados produzem gradientes com tamanhos muito diferentes. O quarto é o conhecimento prévio do adversário, pois saber o rótulo ou características dos dados facilita a reconstrução. As defesas descritas a seguir atuam justamente sobre o gradiente $\nabla W$, reduzindo ou corrompendo a informação que ele carrega.
+A literatura aponta quatro fatores principais que tornam a inversão mais fácil ou mais difícil \cite{Geiping2020,Huang2021}. O primeiro é o tamanho do lote: quanto mais imagens contribuem para o gradiente médio, mais misturada fica a informação de cada uma. O segundo é a arquitetura, que determina quantas equações o gradiente oferece em relação ao número de pixels desconhecidos. O terceiro é o estágio do treinamento, já que modelos treinados e não treinados produzem gradientes com tamanhos muito diferentes. O quarto é o conhecimento prévio do adversário, pois saber o rótulo ou características dos dados facilita a reconstrução. As defesas descritas a seguir atuam justamente sobre o gradiente $\nabla W$, reduzindo ou corrompendo a informação que ele carrega. Entre elas, o DP-SGD, o Top-$k$, o Random-$k$ e o QSGD são as quatro configurações avaliadas neste trabalho, sempre comparadas ao cenário sem defesa.
 
 \subsection{Privacidade Diferencial} \label{sec:dp}
 
@@ -472,8 +405,6 @@ Para aplicar essa ideia a um cálculo numérico, soma-se ruído ao resultado. A 
   \item[$\tilde{g}$] = gradiente privatizado, usado no lugar de $g_t$ na Equação~\ref{eq:sgd}.
 \end{description}
 
-No exemplo guia, o gradiente da Equação~\ref{eq:exemplo-grad} tem norma $\|g\|_2 = 2{,}01$. Com $C = 1$, cada elemento é dividido por $2{,}01$; a linha de gato, por exemplo, passa a $(-0{,}17;\ -0{,}33;\ -0{,}07;\ -0{,}67)$. Em seguida, com $\sigma = 1$ e lote de uma amostra, soma-se a cada elemento um valor sorteado de uma distribuição normal com desvio-padrão $1$. Em um sorteio, a linha de gato recebeu o ruído $(0{,}93;\ 0{,}41;\ 1{,}56;\ -0{,}89)$ e tornou-se $(0{,}76;\ 0{,}08;\ 1{,}49;\ -1{,}56)$. Após o mesmo procedimento nas outras linhas, as somas passaram a $1{,}39$ para avião, $0{,}77$ para gato e $-1{,}38$ para navio. Aplicando a regra do iDLG, o adversário concluiria que a classe é navio: o ruído, várias vezes maior que os valores recortados, apagou o padrão de sinais. O mesmo ruído, porém, também distorce a direção de descida usada no treinamento, e o modelo aprende pior.
-
 O procedimento completo, que inclui a contabilização do custo de privacidade ao longo das iterações por meio do moments accountant, é apresentado no Algoritmo~\ref{alg:dpsgd}.
 
 \begin{algorithm2e}[H]
@@ -503,7 +434,7 @@ A grande vantagem do DP-SGD é oferecer uma garantia matemática de privacidade,
 
 A privacidade diferencial admite variações quanto a quem é protegido, a quem adiciona o ruído e a como o custo é contabilizado. A privacidade diferencial no nível do cliente, em vez de proteger um exemplo, protege todos os dados de um participante. No DP-FedAvg, por exemplo, a atualização de cada cliente é recortada e o servidor adiciona ruído à média \cite{McMahan2018}. Essa variante tem a vantagem de proteger o participante inteiro, mas exige muitos clientes por rodada para que o ruído não prejudique o modelo.
 
-A privacidade diferencial de Rényi (RDP), por sua vez, não é uma nova defesa, mas uma forma mais precisa de somar o custo de privacidade ao longo de muitas iterações. Ela mede a diferença entre as saídas pela divergência de Rényi, exigindo $D_\alpha\big(\mathcal{M}(D) \,\|\, \mathcal{M}(D')\big) \leq \varepsilon$, e pode ser convertida em $(\varepsilon + \log(1/\delta)/(\alpha - 1), \delta)$-privacidade diferencial \cite{Mironov2017}.
+A privacidade diferencial de Rényi (RDP), por sua vez, não é uma nova defesa, mas uma forma mais precisa de somar o custo de privacidade ao longo de muitas iterações. Ela mede a diferença entre as saídas pela divergência de Rényi, exigindo $D_\alpha\big(\mathcal{M}(D) \,\|\, \mathcal{M}(D')\big) \leq \varepsilon$, e pode ser convertida em $(\varepsilon + \log(1/\delta)/(\alpha - 1), \delta)$-privacidade diferencial \cite{Mironov2017}. Entre as variantes apresentadas, apenas o DP-SGD é avaliado experimentalmente; as demais situam o leitor sobre as alternativas disponíveis.
 
 Já na privacidade diferencial local (LDP), cada cliente adiciona ruído antes de enviar seus dados, sem precisar confiar no servidor, exatamente como na resposta aleatorizada. Um mecanismo $Q$ é $\varepsilon$-localmente privado se $\Pr[Q(x) \in S] \leq e^{\varepsilon} \Pr[Q(x') \in S]$ para quaisquer entradas $x$ e $x'$. Sua vantagem é a proteção mais forte; sua limitação é o custo estatístico elevado, que reduz o tamanho efetivo da amostra de $n$ para a ordem de $n\varepsilon^2$ \cite{Duchi2013}.
 
@@ -525,9 +456,7 @@ g_i, & \text{se } |g_i| \text{ está entre as } k \text{ maiores magnitudes de }
 
 A fração de valores mantidos, $\rho = k/d$, em que $d$ é o número total de elementos, é chamada taxa de retenção. Neste trabalho, utiliza-se $\rho = 10\%$.
 
-No exemplo guia, o gradiente da Equação~\ref{eq:exemplo-grad} tem $d = 12$ elementos. Com $k = 3$, os maiores valores absolutos são $1{,}34$, $1{,}09$ e $0{,}67$, e o gradiente comprimido mantém apenas $1{,}09$ na linha de avião e $-0{,}67$ e $-1{,}34$ na linha de gato. As somas das linhas passam a $1{,}09$, $-2{,}01$ e $0$, e a regra do iDLG continua apontando gato. O motivo é que a linha da classe correta tende a concentrar os maiores valores, justamente os que o Top-$k$ preserva; além disso, os elementos mantidos correspondem às maiores entradas ($a_4 = 2{,}0$ e $a_2 = 1{,}0$), que são as mais informativas.
-
-A vantagem do Top-$k$ é preservar a parte mais importante do gradiente, o que mantém a acurácia do modelo próxima à original. \citeonline{Stich2018} mostraram ainda que, guardando localmente os valores descartados e reincorporando-os nas rodadas seguintes, a convergência ocorre à mesma taxa do SGD sem compressão. Como defesa, porém, o exemplo evidencia sua limitação: ao manter os valores mais informativos, o Top-$k$ pode manter também a informação que o adversário procura.
+A vantagem do Top-$k$ é preservar a parte mais importante do gradiente, o que mantém a acurácia do modelo próxima à original. \citeonline{Stich2018} mostraram ainda que, guardando localmente os valores descartados e reincorporando-os nas rodadas seguintes, a convergência ocorre à mesma taxa do SGD sem compressão. Como defesa, porém, há uma limitação previsível: ao manter justamente os valores mais informativos do gradiente, o Top-$k$ tende a preservar também a informação que o adversário procura, hipótese que o experimento do Capítulo~3 avalia.
 
 \subsubsection{Esparsificação Random-$k$}
 
@@ -545,9 +474,7 @@ A esparsificação Random-$k$ também mantém $k$ valores, mas os escolhe por so
 
 \citeonline{Wangni2018} generalizaram essa ideia atribuindo a cada posição uma probabilidade própria de ser mantida, escolhida para equilibrar o ruído introduzido e o custo de comunicação.
 
-No exemplo guia, suponha que o sorteio tenha escolhido as posições 1, 3 e 4 do gradiente da Equação~\ref{eq:exemplo-grad}, todas na linha de avião. O gradiente comprimido mantém $0{,}27$, $0{,}11$ e $1{,}09$, e as somas das linhas passam a $1{,}47$, $0$ e $0$. Nenhuma linha é negativa, e as linhas de gato e navio empatam: a regra do iDLG deixa de identificar o rótulo com segurança. Em outro sorteio, alguma posição da linha de gato poderia ter sido mantida, e o rótulo seria revelado; é justamente essa imprevisibilidade que dificulta o ataque.
-
-A vantagem do Random-$k$ como defesa é que o adversário não sabe quais partes do gradiente receberá, e a informação que chega muda a cada rodada. Sua limitação é descartar valores importantes com a mesma probabilidade que valores irrelevantes, o que torna a convergência mais lenta que a do Top-$k$.
+A vantagem do Random-$k$ como defesa é que o adversário não sabe quais partes do gradiente receberá, e a informação que chega muda a cada rodada. Sua limitação é descartar valores importantes com a mesma probabilidade que valores irrelevantes, o que torna a convergência mais lenta que a do Top-$k$. Assim como o Top-$k$, o Random-$k$ é avaliado com taxa de retenção de $10\%$.
 
 \subsubsection{QSGD}
 
@@ -571,63 +498,7 @@ l/s, & \text{caso contrário}
   \item[$\mathrm{sgn}(g_i)$] = sinal do elemento, que é sempre preservado.
 \end{description}
 
-No exemplo guia, com $s = 4$ e $\|g\|_2 = 2{,}01$, os valores possíveis são $0$, $\pm 0{,}50$, $\pm 1{,}00$, $\pm 1{,}50$ e $\pm 2{,}01$. Para o elemento $-1{,}34$ da linha de gato, a magnitude relativa multiplicada por $s$ é $1{,}34/2{,}01 \times 4 = 2{,}67$; logo, $l = 2$ e a probabilidade de subir para o nível $3/4$ é $0{,}67$. Sorteando-se $0{,}58$, que é menor que $0{,}67$, o valor é arredondado para cima e transmitido como $-2{,}01 \times 3/4 = -1{,}50$. Já o elemento $0{,}27$ da linha de avião tem magnitude relativa $0{,}54$ e probabilidade $0{,}54$ de subir; sorteando-se $0{,}62$, é arredondado para $0$. Repetindo o processo para os doze elementos, as somas das linhas ficam $1{,}50$, $-2{,}50$ e $0{,}50$: como o sinal é preservado, o rótulo gato continua exposto, embora os valores exatos, necessários para reconstruir a entrada, tenham sido perdidos.
-
-A vantagem do QSGD é o controle fino, pelo número de níveis $s$, entre economia de comunicação e perda de precisão. Como defesa, sua limitação é preservar os sinais e a ordem de grandeza dos maiores valores, o que protege o rótulo apenas parcialmente.
-
-\subsubsection{Comparação no Exemplo Guia}
-
-A Figura~\ref{fig:defesas-exemplo} reúne o efeito das quatro defesas sobre o gradiente do exemplo guia. Cada linha mostra os doze elementos do gradiente após a defesa, agrupados pelas classes avião, gato e navio, e a última coluna indica o rótulo que o iDLG inferiria.
-
-\begin{figure}[htb]
-\centering
-\begin{tikzpicture}[
-  font=\footnotesize,
-  cel/.style={draw, minimum width=1.0cm, minimum height=0.62cm, inner sep=0pt, anchor=center},
-  zero/.style={cel, text=gray},
-  mant/.style={cel, fill=blue!18},
-  ruido/.style={cel, fill=red!12},
-  lab/.style={anchor=east, font=\footnotesize},
-  res/.style={anchor=west, font=\footnotesize}
-]
-\def\dx{1.0}\def\dy{0.8}
-% cabeçalho de grupos
-\foreach \nome/\ini in {avião/0, gato/4, navio/8} {
-  \node[font=\footnotesize] at ({(\ini+1.5)*\dx}, 0.75) {\nome};
-  \draw ({(\ini-0.45)*\dx}, 0.5) -- ({(\ini+3.45)*\dx}, 0.5);
-}
-\node[res] at ({11.7*\dx}, 0.75) {rótulo inferido};
-% linha 1: gradiente original
-\node[lab] at ({-0.6*\dx}, 0) {$g$};
-\foreach \v [count=\i from 0] in {0{,}27, 0{,}55, 0{,}11, 1{,}09, $-$0{,}33, $-$0{,}67, $-$0{,}13, $-$1{,}34, 0{,}06, 0{,}12, 0{,}02, 0{,}24}
-  \node[cel, fill=gray!10] at ({\i*\dx}, 0) {\v};
-\node[res] at ({11.7*\dx}, 0) {gato (correto)};
-% linha 2: DP-SGD
-\node[lab] at ({-0.6*\dx}, -\dy) {DP-SGD};
-\foreach \v [count=\i from 0] in {0{,}18, 0{,}73, $-$0{,}41, 0{,}89, 0{,}76, 0{,}08, 1{,}49, $-$1{,}56, 0{,}10, $-$0{,}65, $-$0{,}77, $-$0{,}06}
-  \node[ruido] at ({\i*\dx}, -\dy) {\v};
-\node[res] at ({11.7*\dx}, -\dy) {navio (errado)};
-% linha 3: Top-3
-\node[lab] at ({-0.6*\dx}, {-2*\dy}) {Top-3};
-\foreach \v/\s [count=\i from 0] in {0/zero, 0/zero, 0/zero, 1{,}09/mant, 0/zero, $-$0{,}67/mant, 0/zero, $-$1{,}34/mant, 0/zero, 0/zero, 0/zero, 0/zero}
-  \node[\s] at ({\i*\dx}, {-2*\dy}) {\v};
-\node[res] at ({11.7*\dx}, {-2*\dy}) {gato (correto)};
-% linha 4: Random-3
-\node[lab] at ({-0.6*\dx}, {-3*\dy}) {Random-3};
-\foreach \v/\s [count=\i from 0] in {0{,}27/mant, 0/zero, 0{,}11/mant, 1{,}09/mant, 0/zero, 0/zero, 0/zero, 0/zero, 0/zero, 0/zero, 0/zero, 0/zero}
-  \node[\s] at ({\i*\dx}, {-3*\dy}) {\v};
-\node[res] at ({11.7*\dx}, {-3*\dy}) {empate};
-% linha 5: QSGD
-\node[lab] at ({-0.6*\dx}, {-4*\dy}) {QSGD ($s=4$)};
-\foreach \v/\s [count=\i from 0] in {0/zero, 0{,}50/mant, 0/zero, 1{,}00/mant, $-$0{,}50/mant, $-$0{,}50/mant, 0/zero, $-$1{,}50/mant, 0/zero, 0/zero, 0/zero, 0{,}50/mant}
-  \node[\s] at ({\i*\dx}, {-4*\dy}) {\v};
-\node[res] at ({11.7*\dx}, {-4*\dy}) {gato (correto)};
-\end{tikzpicture}
-\caption{Efeito das defesas sobre o gradiente do exemplo guia e rótulo inferido pela regra do iDLG. A primeira linha é o gradiente original; células em vermelho contêm ruído, células em azul são valores mantidos e zeros em cinza são valores descartados.}
-\label{fig:defesas-exemplo}
-\end{figure}
-
-O exemplo resume o comportamento esperado de cada família: o ruído do DP-SGD altera todos os valores e pode inverter o padrão de sinais; o Top-$k$ preserva justamente a região mais informativa; o Random-$k$ pode ou não preservá-la, dependendo do sorteio; e o QSGD perde precisão, mas mantém os sinais. É importante lembrar que se trata de uma ilustração com um único sorteio e um modelo mínimo; o comportamento em redes reais precisa ser medido experimentalmente, com muitas repetições, o que é feito neste trabalho.
+A vantagem do QSGD é o controle fino, pelo número de níveis $s$, entre economia de comunicação e perda de precisão. Como defesa, sua limitação é preservar os sinais e a ordem de grandeza dos maiores valores, o que protege o rótulo apenas parcialmente. No experimento, o QSGD é avaliado com $s = 16$ níveis.
 
 \subsubsection{Outras Técnicas de Compressão}
 
@@ -635,7 +506,7 @@ Outras técnicas relevantes, embora não avaliadas experimentalmente neste traba
 
 \subsection{Métricas de Avaliação} \label{sec:metricas}
 
-Avaliar uma defesa exige responder a duas perguntas que puxam em direções opostas. A primeira é quão difícil ficou para o adversário, o que corresponde à privacidade; a segunda é quão bom continua o modelo, o que corresponde à utilidade. As métricas a seguir quantificam cada uma delas.
+Avaliar uma defesa exige responder a duas perguntas que puxam em direções opostas. A primeira é quão difícil ficou para o adversário, o que corresponde à privacidade; a segunda é quão bom continua o modelo, o que corresponde à utilidade. As três métricas a seguir, e o teste estatístico que as compara, são exatamente as empregadas no Capítulo~3 e discutidas no Capítulo~4.
 
 \subsubsection{Erro Quadrático Médio de Reconstrução}
 
@@ -651,7 +522,7 @@ O erro quadrático médio (MSE) compara, pixel a pixel, a imagem original $x$ co
   \item[$n$] = número de pixels (multiplicado pelo número de canais de cor).
 \end{description}
 
-Por exemplo, para uma imagem de quatro pixels $x = (0{,}9;\ 0{,}1;\ 0{,}8;\ 0{,}2)$, uma boa reconstrução $x' = (0{,}8;\ 0{,}2;\ 0{,}8;\ 0{,}3)$ tem $\mathrm{MSE} = (0{,}01 + 0{,}01 + 0 + 0{,}01)/4 = 0{,}0075$, enquanto uma reconstrução ruim $x'' = (0{,}3;\ 0{,}7;\ 0{,}1;\ 0{,}9)$ tem $\mathrm{MSE} = (0{,}36 + 0{,}36 + 0{,}49 + 0{,}49)/4 = 0{,}425$. Portanto, MSE baixo significa vazamento, e MSE alto significa proteção. A vantagem do MSE é a simplicidade e a objetividade; sua limitação é não refletir perfeitamente a percepção humana, já que uma imagem levemente deslocada pode ter MSE alto e ainda ser reconhecível.
+Por exemplo, para uma imagem de quatro pixels $x = (0{,}9;\ 0{,}1;\ 0{,}8;\ 0{,}2)$, uma boa reconstrução $x' = (0{,}8;\ 0{,}2;\ 0{,}8;\ 0{,}3)$ tem $\mathrm{MSE} = (0{,}01 + 0{,}01 + 0 + 0{,}01)/4 = 0{,}0075$, enquanto uma reconstrução ruim $x'' = (0{,}3;\ 0{,}7;\ 0{,}1;\ 0{,}9)$ tem $\mathrm{MSE} = (0{,}36 + 0{,}36 + 0{,}49 + 0{,}49)/4 = 0{,}425$. Portanto, MSE baixo significa vazamento, e MSE alto significa proteção. A vantagem do MSE é a simplicidade, a objetividade e a comparabilidade com os trabalhos que o adotam como medida de vazamento. Sua limitação é não refletir a percepção humana: uma imagem levemente deslocada pode ter MSE alto e permanecer reconhecível, enquanto uma imagem uniformemente cinza pode ter MSE moderado sem revelar nada. A literatura emprega também o PSNR, que é uma transformação monótona do MSE e, portanto, ordena as defesas da mesma forma, e medidas estruturais ou perceptuais como o SSIM e o LPIPS, que capturam semelhança de forma mais próxima da visão humana \cite{Huang2021,Yin2021}. Neste trabalho optou-se pelo MSE por sua simplicidade e por permitir comparação direta com os valores reportados nos trabalhos de ataque; para mitigar sua limitação, o Capítulo~3 define um valor de referência que indica o erro esperado quando o ataque nada recupera.
 
 \subsubsection{Acurácia de Inferência de Rótulo}
 
@@ -708,7 +579,7 @@ Como exemplo, suponha cinco medições de MSE sem defesa, $(0{,}009;\ 0{,}004;\ 
 \section{Trabalhos Relacionados} \label{sec:relacionados}
 % =====================================================================
 
-Esta seção descreve os principais trabalhos que fundamentam e motivam a presente pesquisa, organizados em três eixos: o vazamento de privacidade em aprendizado colaborativo, os ataques de reconstrução a partir de gradientes e as defesas e suas avaliações empíricas. Para cada trabalho, apresentam-se o contexto, os métodos empregados e os resultados alcançados. Ao final, a proposta deste trabalho é comparada aos estudos descritos.
+Os trabalhos discutidos nesta seção foram localizados em buscas nas bases ACM Digital Library, IEEE Xplore, Springer Link e arXiv, combinando os termos \textsl{federated learning}, \textsl{gradient inversion}, \textsl{gradient leakage}, \textsl{differential privacy} e \textsl{gradient compression}, com recorte a partir de 2015, ano do primeiro sistema colaborativo com preservação de privacidade aqui discutido. A seleção priorizou os artigos que introduzem os ataques e as defesas avaliadas neste trabalho e as avaliações comparativas mais citadas, complementados pelas referências cruzadas encontradas nesses textos. Esta seção descreve os principais trabalhos assim reunidos, organizados em três eixos: o vazamento de privacidade em aprendizado colaborativo, os ataques de reconstrução a partir de gradientes e as defesas e suas avaliações empíricas. Para cada trabalho, apresentam-se o contexto, os métodos empregados e os resultados alcançados. Ao final, a proposta deste trabalho é comparada aos estudos descritos.
 
 \subsection{Vazamento de Privacidade em Aprendizado Colaborativo}
 
@@ -722,13 +593,17 @@ Esta seção descreve os principais trabalhos que fundamentam e motivam a presen
 
 \subsection{Ataques de Reconstrução a partir de Gradientes}
 
-\citeonline{Zhu2019} apresentaram o DLG, primeiro ataque a reconstruir imagens e textos com fidelidade de pixel e de token a partir de gradientes. O método otimiza entradas e rótulos sintéticos para coincidir com o gradiente observado (Equação~\ref{eq:dlg}), usando L-BFGS. Em experimentos com uma LeNet modificada sobre MNIST, CIFAR-100, SVHN e LFW, o ataque recuperou imagens praticamente idênticas às originais em poucas centenas de iterações, inclusive para lotes de até oito imagens. Os autores avaliaram também defesas simples: ruído gaussiano ou laplaciano com variância a partir de $10^{-2}$ impediu a reconstrução, mas com degradação acentuada da acurácia; a representação em meia precisão não ofereceu proteção; e a poda de gradientes de pequena magnitude tornou as reconstruções irreconhecíveis a partir de cerca de 20\% de esparsidade. Essas observações preliminares, obtidas em uma única arquitetura, motivam a avaliação sistemática realizada neste trabalho.
+\citeonline{Zhu2019} apresentaram o DLG, primeiro ataque a reconstruir imagens e textos com fidelidade de pixel e de token a partir de gradientes. O método otimiza entradas e rótulos sintéticos para coincidir com o gradiente observado (Equação~\ref{eq:dlg}), usando L-BFGS. Em experimentos com uma LeNet modificada sobre MNIST, CIFAR-100, SVHN e LFW, o ataque recuperou imagens praticamente idênticas às originais em poucas centenas de iterações, inclusive para lotes pequenos. Os autores avaliaram também defesas simples: ruído gaussiano ou laplaciano com escala superior a $10^{-2}$ impediu a reconstrução, mas com degradação acentuada da acurácia; a representação em meia precisão não ofereceu proteção; e a poda de gradientes de pequena magnitude tornou as reconstruções irreconhecíveis a partir de cerca de 20\% de esparsidade. Essas observações preliminares, obtidas em uma única arquitetura, motivam a avaliação sistemática realizada neste trabalho.
 
 \citeonline{Zhao2020} propuseram o iDLG ao identificarem que o DLG frequentemente converge para rótulos incorretos. A partir da análise do sinal do gradiente da última camada sob entropia cruzada (Equações~\ref{eq:grad-logit} e \ref{eq:idlg-label}), demonstraram que o rótulo de uma única amostra pode ser extraído analiticamente com 100\% de acerto. Em MNIST, CIFAR-100 e LFW, a extração prévia do rótulo aumentou a taxa de sucesso da reconstrução e acelerou a convergência em relação ao DLG.
 
 \citeonline{Geiping2020} investigaram o quão realista é a ameaça em cenários próximos aos de implantação. Propuseram a função de custo baseada em similaridade de cossenos com regularização TV (Equação~\ref{eq:ig}) e demonstraram analiticamente que a entrada de uma camada totalmente conectada pode ser recuperada exatamente de seu gradiente. Os experimentos, com redes ResNet treinadas e não treinadas sobre CIFAR-10 e ImageNet, mostraram reconstruções reconhecíveis de imagens de alta resolução, recuperação parcial de imagens em lotes maiores e vazamento mesmo quando os clientes executam múltiplos passos locais, como no FedAvg. Os autores concluíram que a agregação de gradientes, por si só, não garante privacidade.
 
 \citeonline{Yin2021} ampliaram a escala dos ataques com o GradInversion, que recupera lotes de imagens do ImageNet a partir de gradientes de uma ResNet-50. O método combina a restauração de rótulos do lote a partir da camada totalmente conectada, uma regularização de fidelidade baseada nas estatísticas das camadas de normalização em lote e um termo de consistência entre múltiplas reconstruções. Foram obtidas reconstruções detalhadas para lotes de até 48 imagens, evidenciando que lotes grandes não constituem, isoladamente, uma defesa suficiente.
+
+Nem todos os ataques recorrem à otimização. \citeonline{Phong2018} mostraram que, em uma rede com camada totalmente conectada na entrada, os dados podem ser recuperados analiticamente da razão entre os gradientes dos pesos e do viés, resultado que motivou o uso de criptografia homomórfica naquele trabalho. \citeonline{ZhuBlaschko2021} generalizaram essa ideia com o R-GAP, que recupera a entrada camada a camada resolvendo sistemas lineares, sem otimização iterativa, e caracterizam quando a arquitetura torna essa recuperação possível.
+
+Mais diretamente relacionado ao escopo desta pesquisa, \citeonline{Hatamizadeh2022} propuseram o GradViT, ataque de inversão específico para Vision Transformers. Os autores exploram a estrutura de atenção e as camadas de normalização para reconstruir imagens do ImageNet a partir de gradientes dessas redes, demonstrando que arquiteturas baseadas em atenção não são intrinsecamente mais seguras que as convolucionais. O trabalho mostra que o ViT já foi estudado como alvo de ataques; o que permanece em aberto, e é o foco desta pesquisa, é o comportamento das defesas de ruído e de compressão nessa arquitetura, sob o mesmo protocolo aplicado a MLP e CNN.
 
 \subsection{Defesas e Avaliações Empíricas}
 
@@ -740,12 +615,14 @@ Esta seção descreve os principais trabalhos que fundamentam e motivam a presen
 
 \citeonline{Sun2021} propuseram o Soteria, defesa que perturba a representação dos dados em uma camada totalmente conectada escolhida, em vez de perturbar o gradiente de toda a rede. A perturbação é calculada para maximizar a distância entre a entrada original e a reconstruída, com restrição sobre o impacto na representação, e é acompanhada de análise teórica de convergência para o FedAvg. Em experimentos com MNIST e CIFAR-10 contra DLG e Inverting Gradients, o Soteria degradou a qualidade das reconstruções mantendo acurácia próxima à do modelo sem defesa.
 
-\citeonline{Huang2021} avaliaram criticamente ataques e defesas de inversão de gradientes em CIFAR-10 com ResNet-18. Mostraram que parte do sucesso reportado pelos ataques decorre de hipóteses fortes, como o conhecimento das estatísticas de normalização em lote e dos rótulos, e avaliaram defesas como poda de gradientes, MixUp e InstaHide, isoladamente e combinadas. Concluíram que a poda com taxas elevadas, especialmente combinada a outras técnicas, pode reduzir substancialmente o vazamento com perda moderada de acurácia, e recomendaram que as defesas sejam avaliadas sempre em conjunto com seu custo de utilidade.
+\citeonline{Huang2021} avaliaram criticamente ataques e defesas de inversão de gradientes em CIFAR-10 com ResNet-18. Mostraram que parte do sucesso reportado pelos ataques decorre de hipóteses fortes, como o conhecimento das estatísticas de normalização em lote e dos rótulos, e avaliaram defesas como poda de gradientes, MixUp e Intra-InstaHide, isoladamente e combinadas. Concluíram que a poda com taxas elevadas, especialmente combinada a outras técnicas, pode reduzir substancialmente o vazamento com perda moderada de acurácia, e recomendaram que as defesas sejam avaliadas sempre em conjunto com seu custo de utilidade.
+
+Duas linhas complementares de defesa merecem registro. \citeonline{Scheliga2022} propuseram o PRECODE, uma extensão de arquitetura que insere um bloco variacional antes do classificador, de modo que o gradiente observado deixe de determinar univocamente a entrada; os autores reportam forte redução do vazamento com pequena perda de acurácia, ao custo de alterar o modelo. \citeonline{Naseri2022} compararam privacidade diferencial local e central em aprendizado federado frente a ataques de inferência e de reconstrução, concluindo que ambas reduzem o vazamento, mas que os níveis de ruído necessários para proteção efetiva costumam ser maiores que os usualmente adotados na prática, observação diretamente relevante para a interpretação dos resultados deste trabalho.
 
 As técnicas de compressão Top-$k$ com memória \cite{Stich2018}, Random-$k$ \cite{Wangni2018}, QSGD \cite{Alistarh2017}, SignSGD \cite{Bernstein2018}, TernGrad \cite{Wen2017}, DGC \cite{Lin2018} e error feedback \cite{Karimireddy2019} foram propostas e avaliadas com foco em eficiência de comunicação. \citeonline{Lin2018}, por exemplo, observaram que a maior parte da troca de gradientes em treinamento distribuído é redundante e obtiveram taxas de compressão de 270 a 600 vezes sem perda de acurácia em classificação de imagens, reconhecimento de fala e modelagem de linguagem. Esses trabalhos, contudo, não investigam o efeito da compressão sobre ataques de inversão, deixando em aberto se a redução de informação voltada à eficiência também se traduz em proteção.
 
 \subsection{Síntese e Posicionamento deste Trabalho} \label{sec:posicionamento}
 
-A análise da literatura permite identificar três lacunas. Primeiro, a maior parte dos trabalhos de ataque \cite{Zhu2019,Zhao2020,Geiping2020,Yin2021} demonstra a vulnerabilidade, mas avalia defesas de forma incidental, com uma única arquitetura e sem medir sistematicamente o custo de utilidade. Segundo, os trabalhos de defesa baseados em privacidade diferencial \cite{Abadi2016,McMahan2018} quantificam a utilidade sob garantias formais, mas não a resistência empírica a ataques de inversão; já as técnicas de compressão \cite{Stich2018,Wangni2018,Alistarh2017,Lin2018} foram concebidas para eficiência de comunicação, sem avaliação de privacidade. Terceiro, as avaliações comparativas existentes \cite{Wei2020,Huang2021} concentram-se em arquiteturas convolucionais e em conjuntos específicos de defesas, não confrontando, sob um mesmo protocolo, privacidade diferencial e as diferentes famílias de compressão, nem arquiteturas baseadas em atenção como o ViT.
+A análise da literatura permite identificar três lacunas. Primeiro, a maior parte dos trabalhos de ataque \cite{Zhu2019,Zhao2020,Geiping2020,Yin2021} demonstra a vulnerabilidade, mas avalia defesas de forma incidental, com uma única arquitetura e sem medir sistematicamente o custo de utilidade. Segundo, os trabalhos de defesa baseados em privacidade diferencial \cite{Abadi2016,McMahan2018} quantificam a utilidade sob garantias formais, mas não a resistência empírica a ataques de inversão; já as técnicas de compressão \cite{Stich2018,Wangni2018,Alistarh2017,Lin2018} foram concebidas para eficiência de comunicação, sem avaliação de privacidade. Terceiro, as avaliações comparativas existentes \cite{Wei2020,Huang2021} concentram-se em arquiteturas convolucionais e em conjuntos específicos de defesas. Comparando os trabalhos segundo cinco critérios, a saber, o ataque empregado, as defesas avaliadas, as bases de dados, as arquiteturas e a medição explícita do custo de utilidade, nenhum deles reúne simultaneamente defesas das duas famílias, arquiteturas de vieses indutivos distintos e as duas dimensões de avaliação. Arquiteturas baseadas em atenção já foram estudadas como alvo de ataques \cite{Hatamizadeh2022}, mas não como objeto de comparação entre defesas sob protocolo uniforme.
 
-Assim como \citeonline{Zhu2019} e \citeonline{Huang2021}, este trabalho avalia defesas contra ataques de inversão e considera o custo de utilidade; assim como \citeonline{Zhao2020}, adota o iDLG, que representa um adversário capaz de inferir o rótulo analiticamente. O primeiro diferencial da proposta é comparar, sob um protocolo fatorial único, cinco configurações que abrangem as duas principais famílias de defesa: ausência de defesa, DP-SGD, Top-$k$, Random-$k$ e QSGD. Além disso, o estudo inclui três arquiteturas com vieses indutivos distintos, MLP, CNN e ViT, e três bases de dados de complexidade crescente. A privacidade é medida de forma conjunta com a utilidade, a primeira pelo MSE de reconstrução e pela acurácia de inferência de rótulo e a segunda pela acurácia de teste. Por fim, a utilidade de cada configuração é medida em 30 execuções com sementes distintas, a privacidade é medida sobre 30 imagens atacadas, e as comparações são sustentadas por testes estatísticos e tamanhos de efeito. Em contrapartida, o estudo adota um cenário de cliente único, sem agregação FedAvg, que corresponde ao caso mais favorável ao adversário discutido na Seção~\ref{sec:fl}, e aplica o DP-SGD como mecanismo empírico de ruído, sem contabilização formal do orçamento $(\varepsilon, \delta)$. Técnicas como privacidade diferencial no nível do cliente, LDP, SignSGD, TernGrad, DGC e error feedback foram apresentadas na fundamentação teórica, mas permanecem fora do escopo experimental.
+Assim como \citeonline{Zhu2019} e \citeonline{Huang2021}, este trabalho avalia defesas contra ataques de inversão e considera o custo de utilidade; assim como \citeonline{Zhao2020}, adota o iDLG, que representa um adversário capaz de inferir o rótulo analiticamente. O primeiro diferencial da proposta é comparar, sob um protocolo fatorial único, cinco configurações que abrangem as duas principais famílias de defesa: ausência de defesa, DP-SGD, Top-$k$, Random-$k$ e QSGD. Além disso, o estudo inclui três arquiteturas com vieses indutivos distintos, MLP, CNN e ViT, e três bases de dados de complexidade crescente, estendendo ao ViT uma comparação de defesas até aqui restrita a arquiteturas convolucionais. A privacidade é medida de forma conjunta com a utilidade, a primeira pelo MSE de reconstrução e pela acurácia de inferência de rótulo e a segunda pela acurácia de teste. Por fim, a utilidade de cada configuração é medida em 30 execuções com sementes distintas, a privacidade é medida sobre 30 imagens atacadas, e as comparações são sustentadas por testes estatísticos e tamanhos de efeito. Em contrapartida, o estudo adota um cenário de cliente único, sem agregação FedAvg, que corresponde ao caso mais favorável ao adversário discutido na Seção~\ref{sec:fl}, e aplica o DP-SGD como mecanismo empírico de ruído, sem contabilização formal do orçamento $(\varepsilon, \delta)$. Técnicas como privacidade diferencial no nível do cliente, LDP, SignSGD, TernGrad, DGC e error feedback foram apresentadas na fundamentação teórica, mas permanecem fora do escopo experimental.

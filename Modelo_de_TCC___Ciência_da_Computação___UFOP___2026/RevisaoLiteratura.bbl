@@ -66,6 +66,13 @@
 \emph{Foundations and Trends in Theoretical Computer Science}, v.~9, n.~3--4,
   p. 211--407, 2014.}
 
+\bibitem[Fowl et al. 2022]{Fowl2022}
+\abntrefinfo{Fowl et al.}{Fowl et al.}{2022}
+{FOWL, L.; GEIPING, J.; CZAJA, W.; GOLDBLUM, M.; GOLDSTEIN, T. Robbing the fed:
+  Directly obtaining private data in federated learning with modified models.
+  In:  \emph{Proceedings of the International Conference on Learning
+  Representations}. Virtual Event: [s.n.], 2022.}
+
 \bibitem[Geiping et al. 2020]{Geiping2020}
 \abntrefinfo{Geiping et al.}{Geiping et al.}{2020}
 {GEIPING, J.; BAUERMEISTER, H.; DR{\"O}GE, H.; MOELLER, M. Inverting gradients
@@ -78,6 +85,13 @@
   Courville}{2016}
 {GOODFELLOW, I.; BENGIO, Y.; COURVILLE, A. \emph{Deep Learning}. Cambridge: MIT
   Press, 2016.}
+
+\bibitem[Hatamizadeh et al. 2022]{Hatamizadeh2022}
+\abntrefinfo{Hatamizadeh et al.}{Hatamizadeh et al.}{2022}
+{HATAMIZADEH, A.; YIN, H.; ROTH, H.~R.; LI, W.; KAUTZ, J.; XU, D.; MOLCHANOV,
+  P. {GradViT}: Gradient inversion of vision transformers. In:
+  \emph{Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern
+  Recognition}. New Orleans: [s.n.], 2022. p. 10021--10030.}
 
 \bibitem[Huang et al. 2021]{Huang2021}
 \abntrefinfo{Huang et al.}{Huang et al.}{2021}
@@ -106,11 +120,6 @@
 {KINGMA, D.~P.; BA, J. Adam: A method for stochastic optimization. In:
   \emph{Proceedings of the International Conference on Learning
   Representations}. San Diego: [s.n.], 2015.}
-
-\bibitem[Krizhevsky 2009]{Krizhevsky2009}
-\abntrefinfo{Krizhevsky}{Krizhevsky}{2009}
-{KRIZHEVSKY, A. \emph{Learning Multiple Layers of Features from Tiny Images}.
-  2009. Relatório técnico. Toronto: University of Toronto.}
 
 \bibitem[LeCun et al. 1998]{LeCun1998}
 \abntrefinfo{LeCun et al.}{LeCun et al.}{1998}
@@ -162,6 +171,28 @@
 \abntrefinfo{Mitchell}{Mitchell}{1997}
 {MITCHELL, T.~M. \emph{Machine Learning}. New York: McGraw-Hill, 1997.}
 
+\bibitem[Naseri, Hayes e {DE CRISTOFARO} 2022]{Naseri2022}
+\abntrefinfo{Naseri, Hayes e {DE CRISTOFARO}}{Naseri; Hayes; {DE
+  CRISTOFARO}}{2022}
+{NASERI, M.; HAYES, J.; {DE CRISTOFARO}, E. Local and central differential
+  privacy for robustness and privacy in federated learning. In:
+  \emph{Proceedings of the Network and Distributed System Security Symposium}.
+  San Diego: [s.n.], 2022.}
+
+\bibitem[Pasquini, Francati e Ateniese 2022]{Pasquini2022}
+\abntrefinfo{Pasquini, Francati e Ateniese}{Pasquini; Francati; Ateniese}{2022}
+{PASQUINI, D.; FRANCATI, D.; ATENIESE, G. Eluding secure aggregation in
+  federated learning via model inconsistency. In:  \emph{Proceedings of the ACM
+  Conference on Computer and Communications Security}. Los Angeles: [s.n.],
+  2022.}
+
+\bibitem[Phong et al. 2018]{Phong2018}
+\abntrefinfo{Phong et al.}{Phong et al.}{2018}
+{PHONG, L.~T.; AONO, Y.; HAYASHI, T.; WANG, L.; MORIAI, S. Privacy-preserving
+  deep learning via additively homomorphic encryption.
+\emph{IEEE Transactions on Information Forensics and Security}, v.~13, n.~5, p.
+  1333--1345, 2018.}
+
 \bibitem[Rudin, Osher e Fatemi 1992]{Rudin1992}
 \abntrefinfo{Rudin, Osher e Fatemi}{Rudin; Osher; Fatemi}{1992}
 {RUDIN, L.~I.; OSHER, S.; FATEMI, E. Nonlinear total variation based noise
@@ -173,6 +204,13 @@
 {RUMELHART, D.~E.; HINTON, G.~E.; WILLIAMS, R.~J. Learning representations by
   back-propagating errors.
 \emph{Nature}, v.~323, n.~6088, p. 533--536, 1986.}
+
+\bibitem[Scheliga, M{\"a}der e Seeland 2022]{Scheliga2022}
+\abntrefinfo{Scheliga, M{\"a}der e Seeland}{Scheliga; M{\"a}der; Seeland}{2022}
+{SCHELIGA, D.; M{\"A}DER, P.; SEELAND, M. {PRECODE}: A generic model extension
+  to prevent deep gradient leakage. In:  \emph{Proceedings of the IEEE/CVF
+  Winter Conference on Applications of Computer Vision}. Waikoloa: [s.n.],
+  2022.}
 
 \bibitem[Shokri e Shmatikov 2015]{Shokri2015}
 \abntrefinfo{Shokri e Shmatikov}{Shokri; Shmatikov}{2015}
@@ -228,11 +266,6 @@
   \emph{Proceedings of the Conference on Neural Information Processing
   Systems}. Long Beach: [s.n.], 2017. p. 1509--1519.}
 
-\bibitem[Xiao, Rasul e Vollgraf 2017]{Xiao2017}
-\abntrefinfo{Xiao, Rasul e Vollgraf}{Xiao; Rasul; Vollgraf}{2017}
-{XIAO, H.; RASUL, K.; VOLLGRAF, R. \emph{Fashion-MNIST: a Novel Image Dataset
-  for Benchmarking Machine Learning Algorithms}. 2017. ArXiv:1708.07747.}
-
 \bibitem[Yin et al. 2021]{Yin2021}
 \abntrefinfo{Yin et al.}{Yin et al.}{2021}
 {YIN, H.; MALLYA, A.; VAHDAT, A.; ALVAREZ, J.~M.; KAUTZ, J.; MOLCHANOV, P. See
@@ -244,6 +277,12 @@
 \abntrefinfo{Zhao, Mopuri e Bilen}{Zhao; Mopuri; Bilen}{2020}
 {ZHAO, B.; MOPURI, K.~R.; BILEN, H. \emph{{iDLG}: Improved Deep Leakage from
   Gradients}. 2020. ArXiv:2001.02610.}
+
+\bibitem[Zhu e Blaschko 2021]{ZhuBlaschko2021}
+\abntrefinfo{Zhu e Blaschko}{Zhu; Blaschko}{2021}
+{ZHU, J.; BLASCHKO, M.~B. {R-GAP}: Recursive gradient attack on privacy. In:
+  \emph{Proceedings of the International Conference on Learning
+  Representations}. Virtual Event: [s.n.], 2021.}
 
 \bibitem[Zhu, Liu e Han 2019]{Zhu2019}
 \abntrefinfo{Zhu, Liu e Han}{Zhu; Liu; Han}{2019}

@@ -1,14 +1,14 @@
 # Fdb version 4
-["bibtex RevisaoLiteratura"] 1789333125.82325 "RevisaoLiteratura.aux" "RevisaoLiteratura.bbl" "RevisaoLiteratura" 1789333127.37491 0
+["bibtex RevisaoLiteratura"] 1791254797.32987 "RevisaoLiteratura.aux" "RevisaoLiteratura.bbl" "RevisaoLiteratura" 1791254799.6418 0
   "./abntex2-alf.bst" 1789325325.40117 60082 1c999a6bd28f2c83247b075aaf0482a6 ""
-  "./bibliografia.bib" 1789327976.51929 15903 85ca747dd2973749154100e0403819cd ""
+  "./bibliografia.bib" 1791254794.43651 18495 7cc5cb6afaec8e9f9241b56af1996e67 ""
   "/usr/local/texlive/2026/texmf-dist/bibtex/bib/abntex2/abntex2-options.bib" 1357081713 5396 4eb260dac60f150ae608d45252853090 ""
-  "RevisaoLiteratura.aux" 1789333127.06063 42781 e5d7f3cec0750326ba685f3430d966e0 "pdflatex"
+  "RevisaoLiteratura.aux" 1791254799.07868 41779 732cff66f869b3584254f6fdfbad73c2 "pdflatex"
   (generated)
   "RevisaoLiteratura.bbl"
   "RevisaoLiteratura.blg"
   (rewritten before read)
-["pdflatex"] 1789333125.92705 "RevisaoLiteratura.tex" "RevisaoLiteratura.pdf" "RevisaoLiteratura" 1789333127.37509 0
+["pdflatex"] 1791254797.51553 "RevisaoLiteratura.tex" "RevisaoLiteratura.pdf" "RevisaoLiteratura" 1791254799.64203 0
   "/usr/local/texlive/2026/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc" 1136849721 2971 def0b6c1f0b107b3b936def894055589 ""
   "/usr/local/texlive/2026/texmf-dist/fonts/enc/dvips/tex-gyre/q-ec-sc.enc" 1529098226 2881 8e2aef9e38084b946e7656b60672fedb ""
   "/usr/local/texlive/2026/texmf-dist/fonts/enc/dvips/tex-gyre/q-ec.enc" 1529098226 2457 aaabbccba4df2a7f7371410ee4e075a3 ""
@@ -243,16 +243,15 @@
   "/usr/local/texlive/2026/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1782083231 5573038 b99aad5e4898a9034e953632f940512b ""
   "/usr/local/texlive/2026/texmf-var/web2c/pdftex/pdflatex.fmt" 1782083148 3636769 273814a60d18af561331802a7947bdf5 ""
   "/usr/local/texlive/2026/texmf.cnf" 1774209515 577 648cd9f92f9c0eac486f4c71c85cfbbe ""
-  "Capitulos/Cap2-RevisaoBibliografica.tex" 1789332139.06657 70562 2def4b0cac75f4bc064bf9b0d182aa56 ""
+  "Capitulos/Cap2-RevisaoBibliografica.tex" 1791254794.43547 66450 1d8079977f0628882c2694b16fe362cc ""
   "PreTextuais/ListaSiglas.tex" 1789327274.32549 1473 6e6018e4f93c32f1554ea3e17e971d8f ""
-  "RevisaoLiteratura.aux" 1789333127.06063 42781 e5d7f3cec0750326ba685f3430d966e0 "pdflatex"
-  "RevisaoLiteratura.bbl" 1789333125.92584 12244 6143b84d6978f3a5d0f2287bfce04c33 "bibtex RevisaoLiteratura"
-  "RevisaoLiteratura.brf" 1789333127.06542 5042 8fb1003ca80680c124951795ab6236e7 "pdflatex"
-  "RevisaoLiteratura.loa" 1789333127.06569 311 f490d721fcb0e4ddfed6ce83312d3f0d "pdflatex"
-  "RevisaoLiteratura.lof" 1789333127.06564 931 5409354f7cfdc7cf6db20ae1f91f868b "pdflatex"
-  "RevisaoLiteratura.lot" 1789333127.06567 159 8eda83fbb4e41360e1e29070489b818a "pdflatex"
-  "RevisaoLiteratura.tex" 1789327284.14233 1881 201cfab75667650798463d8adcd67096 ""
-  "RevisaoLiteratura.toc" 1789333127.0657 3940 b86aa507cfb7760baebda3497dcb2063 "pdflatex"
+  "RevisaoLiteratura.aux" 1791254799.07868 41779 732cff66f869b3584254f6fdfbad73c2 "pdflatex"
+  "RevisaoLiteratura.bbl" 1791254797.50906 14259 d331fe8c9b3e570a2a6426a589c18dab "bibtex RevisaoLiteratura"
+  "RevisaoLiteratura.brf" 1791254799.08725 5385 50cd1a74d9b6658f99f3e9320cc8c5a2 "pdflatex"
+  "RevisaoLiteratura.loa" 1791254799.08772 311 9dccbdf5e7e0ceb0b8a1333f1ed113ac "pdflatex"
+  "RevisaoLiteratura.lof" 1791254799.08769 437 be1e08bf7da33591e559d670049758ab "pdflatex"
+  "RevisaoLiteratura.tex" 1791236110.61144 1812 7794dc720de8adeab6b555d242bfcefd ""
+  "RevisaoLiteratura.toc" 1791254799.08775 3815 74a42a3c353330e3107eaf8eec37f5ab "pdflatex"
   "abntex2.cls" 1789325325.40242 36530 b84090dc395683d5ce37d145d851cd89 ""
   "abntex2abrev.sty" 1789325325.40272 4703 37b514a90bd0b69ee9f8e340d7ac09d5 ""
   "abntex2cite.sty" 1789325325.40335 41421 5c61b7de78a71e5ee4284d4b2fcd09b3 ""
@@ -263,7 +262,6 @@
   "RevisaoLiteratura.loa"
   "RevisaoLiteratura.lof"
   "RevisaoLiteratura.log"
-  "RevisaoLiteratura.lot"
   "RevisaoLiteratura.pdf"
   "RevisaoLiteratura.toc"
   (rewritten before read)

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.6.21)  13 SEP 2026 17:58
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.6.21)  5 OCT 2026 23:37
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1349,10 +1349,10 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 (/usr/local/texlive/2026/texmf-dist/tex/latex/microtype/mt-msb.cfg
 File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
 )
-(./Introducao.toc [1
+(./Introducao.toc) [1
 
 
-]) [2] (./Capitulos/Cap1-Introducao.tex
+] (./Capitulos/Cap1-Introducao.tex
 Cap\'{\i }tulo 1.
 
 pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has 
@@ -1366,15 +1366,21 @@ l.18
 ]
 Package babel Info: 'brazil' activates 'portuges' shorthands.
 (babel)             Reported on input line 24.
- [2] [3] [4]) [5] (./Introducao.bbl (./Introducao.brf)
+ [2]
+LaTeX Font Info:    Trying to load font information for TS1+qtm on input line 3
+0.
+ (/usr/local/texlive/2026/texmf-dist/tex/latex/tex-gyre/ts1qtm.fd
+File: ts1qtm.fd 2009/09/25 v1.2 font definition file for TS1/qtm
+) [3{/usr/local/texlive/2026/texmf-dist/fonts/enc/dvips/tex-gyre/q-ts1.enc}])
+(./Introducao.bbl (./Introducao.brf)
 \tf@brf=\write5
 \openout5 = `Introducao.brf'.
 
- [6]
+ [4]
 bibitemlist
-[7
+[5
 
-]) [8]
+]) [6]
 \tf@toc=\write6
 \openout6 = `Introducao.toc'.
 
@@ -1390,14 +1396,14 @@ L3 programming layer <2020/03/25>
 LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
 
 Package rerunfilecheck Info: File `Introducao.brf' has not changed.
-(rerunfilecheck)             Checksum: 40D0B5D48BE9E4DB3A5C2552B19AD5B3;1049.
+(rerunfilecheck)             Checksum: 054C87F4026181A4C94257E7E9EA752D;956.
  ) 
 Here is how much of TeX's memory you used:
- 32463 strings out of 467525
- 589696 string characters out of 5418982
- 1074138 words of memory out of 5000000
- 60665 multiletter control sequences out of 15000+600000
- 669391 words of font info for 138 fonts, out of 8000000 for 9000
+ 32451 strings out of 467525
+ 589702 string characters out of 5418982
+ 1073798 words of memory out of 5000000
+ 60666 multiletter control sequences out of 15000+600000
+ 666289 words of font info for 133 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  99i,12n,107p,1174b,746s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb
@@ -1409,10 +1415,10 @@ ocal/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/lo
 cal/texlive/2026/texmf-dist/fonts/type1/public/tex-gyre/qtmb.pfb></usr/local/te
 xlive/2026/texmf-dist/fonts/type1/public/tex-gyre/qtmr.pfb></usr/local/texlive/
 2026/texmf-dist/fonts/type1/public/tex-gyre/qtmri.pfb>
-Output written on Introducao.pdf (11 pages, 172659 bytes).
+Output written on Introducao.pdf (8 pages, 162315 bytes).
 PDF statistics:
- 226 PDF objects out of 1000 (max. 8388607)
- 193 compressed objects within 2 object streams
- 37 named destinations out of 1000 (max. 500000)
- 22085 words of extra memory for PDF output out of 24883 (max. 10000000)
+ 191 PDF objects out of 1000 (max. 8388607)
+ 160 compressed objects within 2 object streams
+ 29 named destinations out of 1000 (max. 500000)
+ 22061 words of extra memory for PDF output out of 24883 (max. 10000000)
 

@@ -19,12 +19,6 @@
   \emph{Proceedings of the Conference on Neural Information Processing
   Systems}. Long Beach: [s.n.], 2017. p. 1709--1720.}
 
-\bibitem[BRASIL 2018]{Brasil2018}
-\abntrefinfo{BRASIL}{BRASIL}{2018}
-{BRASIL. \emph{Lei n\textsuperscript{o} 13.709, de 14 de agosto de 2018: Lei
-  Geral de Proteção de Dados Pessoais ({LGPD})}. 2018. Diário Oficial da
-  União, Brasília, DF, 15 ago. 2018.}
-
 \bibitem[Geiping et al. 2020]{Geiping2020}
 \abntrefinfo{Geiping et al.}{Geiping et al.}{2020}
 {GEIPING, J.; BAUERMEISTER, H.; DR{\"O}GE, H.; MOELLER, M. Inverting gradients
@@ -44,14 +38,6 @@
   inversion attacks and defenses in federated learning. In:  \emph{Proceedings
   of the Conference on Neural Information Processing Systems}. Virtual Event:
   [s.n.], 2021. p. 7232--7241.}
-
-\bibitem[Kairouz et al. 2021]{Kairouz2021}
-\abntrefinfo{Kairouz et al.}{Kairouz et al.}{2021}
-{KAIROUZ, P.; MCMAHAN, H.~B.; AVENT, B.; BELLET, A.; BENNIS, M.; BHAGOJI,
-  A.~N.; BONAWITZ, K.; CHARLES, Z.; CORMODE, G.; CUMMINGS, R. et al. Advances
-  and open problems in federated learning.
-\emph{Foundations and Trends in Machine Learning}, v.~14, n.~1--2, p. 1--210,
-  2021.}
 
 \bibitem[Lin et al. 2018]{Lin2018}
 \abntrefinfo{Lin et al.}{Lin et al.}{2018}
